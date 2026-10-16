@@ -9,6 +9,7 @@ data/types.d.ts
 public/tailwindcss
 public/output.css
 public/daisyui.css
+public/themes.css
 
 # # Environment & Secrets
 .env
