@@ -5,7 +5,6 @@ echo "Menyiapkan environment daisyUI..."
 if [ ! -f ./daisyui.css ]; then
   echo "Unduh daisyui.css..."
   wget https://cdn.jsdelivr.net/npm/daisyui@5/daisyui.css -O ./daisyui.css
-  wget https://cdn.jsdelivr.net/npm/daisyui@5/themes.css -O ./themes.css
 fi
 
 echo "Setup daisyUI selesai!"

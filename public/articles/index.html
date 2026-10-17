@@ -5,19 +5,6 @@
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
     <title>Articles | root@adrian:~#</title>
 
-    <!-- Theme Initialization (prevents FOUC) -->
-    <script>
-      (function() {
-        const theme = localStorage.getItem('theme') || 'dark';
-        document.documentElement.setAttribute('data-theme', theme);
-        if (theme === 'dark') {
-          document.documentElement.classList.add('dark');
-        } else {
-          document.documentElement.classList.remove('dark');
-        }
-      })();
-    </script>
-
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com" rel="preconnect" />
     <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
@@ -28,7 +15,7 @@
 
     <!-- Compiled Tailwind CSS + DaisyUI -->
     <link rel="stylesheet" href="../output.css" />
-    <script src="../script.js" defer></script>
+    <script src="./articles.js" defer></script>
   </head>
   <body
     class="bg-background text-on-surface antialiased min-h-screen flex flex-col selection:bg-primary selection:text-surface-container-lowest font-body-md transition-colors duration-200"
@@ -49,7 +36,7 @@
           ></span>
           Adrian Pratama
         </a>
-        
+
         <div class="flex items-center gap-3 sm:gap-6">
           <nav class="flex items-center gap-3 sm:gap-6 text-sm font-mono">
             <a
@@ -60,8 +47,13 @@
             <a class="text-primary font-medium" href="./">Artikel</a>
           </nav>
 
-          <div class="border-l border-outline-variant pl-3 sm:pl-6 flex items-center">
-            <label class="swap swap-rotate btn btn-ghost btn-circle btn-sm text-on-surface hover:text-primary transition-colors cursor-pointer" title="Ganti Tema (Light/Dark)">
+          <div
+            class="border-l border-outline-variant pl-3 sm:pl-6 flex items-center"
+          >
+            <label
+              class="swap swap-rotate btn btn-ghost btn-circle btn-sm text-on-surface hover:text-primary transition-colors cursor-pointer"
+              title="Ganti Tema (Light/Dark)"
+            >
               <!-- this hidden checkbox controls the state -->
               <input type="checkbox" class="theme-controller" value="light" />
 
@@ -107,7 +99,8 @@
           <p
             class="mt-2 sm:mt-3 text-sm sm:text-body-lg font-body-lg text-on-surface-variant leading-relaxed"
           >
-            Kumpulan tulisan seputar administrasi sistem Linux, pengujian penetrasi keamanan siber, dan dokumentasi eksplorasi homelab.
+            Kumpulan tulisan seputar administrasi sistem Linux, pengujian
+            penetrasi keamanan siber, dan dokumentasi eksplorasi homelab.
           </p>
         </div>
       </section>
@@ -184,13 +177,16 @@
               <a
                 class="focus:outline-none"
                 href="reading_article_clean_editorial_layout/"
-                >Automating Linux Server Hardening with Ansible and CIS Benchmarks</a
+                >Automating Linux Server Hardening with Ansible and CIS
+                Benchmarks</a
               >
             </h2>
             <p
               class="text-xs sm:text-body-sm font-body-sm text-on-surface-variant leading-relaxed line-clamp-3"
             >
-              Panduan menyusun playbook Ansible yang idempoten untuk menerapkan standar keamanan CIS Level 1 di server Debian, auditd, dan verifikasi kepatuhan sistem.
+              Panduan menyusun playbook Ansible yang idempoten untuk menerapkan
+              standar keamanan CIS Level 1 di server Debian, auditd, dan
+              verifikasi kepatuhan sistem.
             </p>
           </div>
           <div
@@ -230,13 +226,16 @@
               <a
                 class="focus:outline-none"
                 href="reading_article_clean_editorial_layout/"
-                >Deep Dive: Linux Kernel Exploitation &amp; Privilege Escalation Walkthrough</a
+                >Deep Dive: Linux Kernel Exploitation &amp; Privilege Escalation
+                Walkthrough</a
               >
             </h2>
             <p
               class="text-xs sm:text-body-sm font-body-sm text-on-surface-variant leading-relaxed line-clamp-3"
             >
-              Pembahasan teknis mekanisme alokator memori SLUB, konsep dasar dirtycred, dan teknik inspeksi struktur internal kernel pada lingkungan isolasi QEMU.
+              Pembahasan teknis mekanisme alokator memori SLUB, konsep dasar
+              dirtycred, dan teknik inspeksi struktur internal kernel pada
+              lingkungan isolasi QEMU.
             </p>
           </div>
           <div
@@ -276,13 +275,16 @@
               <a
                 class="focus:outline-none"
                 href="reading_article_clean_editorial_layout/"
-                >Building an Isolated Active Directory Lab in Proxmox VE for Red Teaming</a
+                >Building an Isolated Active Directory Lab in Proxmox VE for Red
+                Teaming</a
               >
             </h2>
             <p
               class="text-xs sm:text-body-sm font-body-sm text-on-surface-variant leading-relaxed line-clamp-3"
             >
-              Otomatisasi pembuatan multi-domain Active Directory menggunakan Terraform dan Packer di Proxmox, dilengkapi dengan integrasi logging telemetri Splunk dan Sysmon.
+              Otomatisasi pembuatan multi-domain Active Directory menggunakan
+              Terraform dan Packer di Proxmox, dilengkapi dengan integrasi
+              logging telemetri Splunk dan Sysmon.
             </p>
           </div>
           <div
@@ -322,13 +324,16 @@
               <a
                 class="focus:outline-none"
                 href="reading_article_clean_editorial_layout/"
-                >Understanding eBPF for Runtime Security Monitoring in Linux Systems</a
+                >Understanding eBPF for Runtime Security Monitoring in Linux
+                Systems</a
               >
             </h2>
             <p
               class="text-xs sm:text-body-sm font-body-sm text-on-surface-variant leading-relaxed line-clamp-3"
             >
-              Mengenal hooking kprobes dan tracepoints dengan Cilium Tetragon untuk mendeteksi eskalasi hak akses dan eksekusi biner yang mencurigakan secara real-time.
+              Mengenal hooking kprobes dan tracepoints dengan Cilium Tetragon
+              untuk mendeteksi eskalasi hak akses dan eksekusi biner yang
+              mencurigakan secara real-time.
             </p>
           </div>
           <div
@@ -374,7 +379,9 @@
             <p
               class="text-xs sm:text-body-sm font-body-sm text-on-surface-variant leading-relaxed line-clamp-3"
             >
-              Merancang konektivitas VPN antar-lokasi menggunakan router firewall OPNsense, aturan perutean khusus, serta Unbound split-horizon DNS untuk akses homelab.
+              Merancang konektivitas VPN antar-lokasi menggunakan router
+              firewall OPNsense, aturan perutean khusus, serta Unbound
+              split-horizon DNS untuk akses homelab.
             </p>
           </div>
           <div
@@ -414,13 +421,16 @@
               <a
                 class="focus:outline-none"
                 href="reading_article_clean_editorial_layout/"
-                >HTB Writeup: Buff - Buffer Overflow &amp; Web Exploitation to Root</a
+                >HTB Writeup: Buff - Buffer Overflow &amp; Web Exploitation to
+                Root</a
               >
             </h2>
             <p
               class="text-xs sm:text-body-sm font-body-sm text-on-surface-variant leading-relaxed line-clamp-3"
             >
-              Pembahasan mesin HTB Buff mulai dari eksploitasi celah unggah berkas tak terotentikasi hingga eksploitasi 32-bit stack buffer overflow untuk mendapatkan akses root.
+              Pembahasan mesin HTB Buff mulai dari eksploitasi celah unggah
+              berkas tak terotentikasi hingga eksploitasi 32-bit stack buffer
+              overflow untuk mendapatkan akses root.
             </p>
           </div>
           <div
@@ -471,7 +481,9 @@
               class="px-3 h-8 rounded-full bg-surface-container border border-outline-variant text-on-surface-variant hover:text-on-surface hover:border-primary transition-colors flex items-center gap-1 cursor-pointer"
             >
               <span>Selanjutnya</span>
-              <span class="material-symbols-outlined text-xs">arrow_forward</span>
+              <span class="material-symbols-outlined text-xs"
+                >arrow_forward</span
+              >
             </button>
           </div>
         </div>
@@ -486,13 +498,19 @@
             >
               Berlangganan Pembaruan Artikel
             </h3>
-            <p class="text-xs sm:text-body-sm font-body-sm text-on-surface-variant">
-              Dapatkan rangkuman artikel baru dan catatan eksperimen langsung di inbox Anda. Tanpa spam.
+            <p
+              class="text-xs sm:text-body-sm font-body-sm text-on-surface-variant"
+            >
+              Dapatkan rangkuman artikel baru dan catatan eksperimen langsung di
+              inbox Anda. Tanpa spam.
             </p>
           </div>
           <form
             class="flex flex-col sm:flex-row gap-2 w-full md:w-auto min-w-0 sm:min-w-[300px]"
-            onsubmit="event.preventDefault(); alert('Terima kasih telah berlangganan!');"
+            onsubmit="
+              event.preventDefault();
+              alert('Terima kasih telah berlangganan!');
+            "
           >
             <input
               class="bg-surface-container border border-outline-variant rounded-full px-4 py-2 text-sm text-on-surface placeholder:text-outline focus:outline-none focus:border-primary w-full"
@@ -505,7 +523,9 @@
               type="submit"
             >
               <span>Langganan</span>
-              <span class="material-symbols-outlined text-xs">arrow_forward</span>
+              <span class="material-symbols-outlined text-xs"
+                >arrow_forward</span
+              >
             </button>
           </form>
         </div>

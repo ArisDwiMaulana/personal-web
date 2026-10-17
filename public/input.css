@@ -1,10 +1,11 @@
 @import "tailwindcss";
 @import "./daisyui.css";
-@import "./themes.css";
 
 @source "./**/**/*.html";
 @source "./**/*.html";
 @source "./*.html";
+@source "./**/*.js";
+@source "./*.js";
 
 @theme {
   --color-outline: var(--color-outline);
@@ -186,11 +187,34 @@
   --color-on-error: #690005;
   --color-on-error-container: #ffdad6;
 
+  /* DaisyUI Component Geometry Tokens */
+  --radius-selector: 0.5rem;
+  --radius-field: 0.25rem;
+  --radius-box: 0.5rem;
+  --size-selector: 0.25rem;
+  --size-field: 0.25rem;
+  --border: 1px;
+  --depth: 1;
+  --noise: 0;
+
   /* DaisyUI Semantic Variables (Dark) */
   --color-base-100: #0f131c;
   --color-base-200: #181b25;
   --color-base-300: #1c1f29;
   --color-base-content: #dfe2ef;
+  --color-primary-content: #003824;
+  --color-secondary-content: #003640;
+  --color-accent: #4edea3;
+  --color-accent-content: #003824;
+  --color-neutral: #1c1f29;
+  --color-neutral-content: #dfe2ef;
+  --color-info: #4cd7f6;
+  --color-info-content: #003640;
+  --color-success: #4edea3;
+  --color-success-content: #003824;
+  --color-warning: #f59e0b;
+  --color-warning-content: #451a03;
+  --color-error-content: #690005;
 }
 
 /* ====================================================
@@ -261,11 +285,34 @@
   --color-on-error: #ffffff;
   --color-on-error-container: #7f1d1d;
 
+  /* DaisyUI Component Geometry Tokens */
+  --radius-selector: 0.5rem;
+  --radius-field: 0.25rem;
+  --radius-box: 0.5rem;
+  --size-selector: 0.25rem;
+  --size-field: 0.25rem;
+  --border: 1px;
+  --depth: 1;
+  --noise: 0;
+
   /* DaisyUI Semantic Variables (Light) */
   --color-base-100: #ffffff;
   --color-base-200: #f8fafc;
   --color-base-300: #f1f5f9;
   --color-base-content: #0f172a;
+  --color-primary-content: #ffffff;
+  --color-secondary-content: #ffffff;
+  --color-accent: #059669;
+  --color-accent-content: #ffffff;
+  --color-neutral: #f1f5f9;
+  --color-neutral-content: #0f172a;
+  --color-info: #0284c7;
+  --color-info-content: #ffffff;
+  --color-success: #059669;
+  --color-success-content: #ffffff;
+  --color-warning: #d97706;
+  --color-warning-content: #ffffff;
+  --color-error-content: #ffffff;
 }
 
 /* Material Symbols and custom UI utilities */

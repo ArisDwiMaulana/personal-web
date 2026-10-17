@@ -5,19 +5,6 @@
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
     <title>Adrian | SecLog - Cybersecurity &amp; Sysadmin Portfolio</title>
 
-    <!-- Theme Initialization (prevents FOUC) -->
-    <script>
-      (function() {
-        const theme = localStorage.getItem('theme') || 'dark';
-        document.documentElement.setAttribute('data-theme', theme);
-        if (theme === 'dark') {
-          document.documentElement.classList.add('dark');
-        } else {
-          document.documentElement.classList.remove('dark');
-        }
-      })();
-    </script>
-
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com" rel="preconnect" />
     <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
@@ -28,7 +15,7 @@
 
     <!-- Compiled Tailwind CSS + DaisyUI -->
     <link rel="stylesheet" href="./output.css" />
-    <script src="./script.js" defer></script>
+    <script src="./home.js" defer></script>
   </head>
   <body
     class="bg-surface text-on-surface antialiased selection:bg-primary-container selection:text-on-primary-container min-h-screen flex flex-col font-body-md transition-colors duration-200"
@@ -49,9 +36,11 @@
           ></span>
           Adrian Pratama
         </a>
-        
+
         <div class="flex items-center gap-3 sm:gap-6">
-          <nav class="flex items-center gap-3 sm:gap-6 text-sm sm:text-body-md font-mono">
+          <nav
+            class="flex items-center gap-3 sm:gap-6 text-sm sm:text-body-md font-mono"
+          >
             <a class="text-primary font-medium" href="./index.html">Home</a>
             <a
               class="text-on-surface-variant hover:text-on-surface transition-colors"
@@ -60,8 +49,13 @@
             >
           </nav>
 
-          <div class="border-l border-outline-variant pl-3 sm:pl-6 flex items-center">
-            <label class="swap swap-rotate btn btn-ghost btn-circle btn-sm text-on-surface hover:text-primary transition-colors cursor-pointer" title="Ganti Tema (Light/Dark)">
+          <div
+            class="border-l border-outline-variant pl-3 sm:pl-6 flex items-center"
+          >
+            <label
+              class="swap swap-rotate btn btn-ghost btn-circle btn-sm text-on-surface hover:text-primary transition-colors cursor-pointer"
+              title="Ganti Tema (Light/Dark)"
+            >
               <!-- this hidden checkbox controls the state -->
               <input type="checkbox" class="theme-controller" value="light" />
 
@@ -69,18 +63,22 @@
               <svg
                 class="swap-off h-5 w-5 fill-current"
                 xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24">
+                viewBox="0 0 24 24"
+              >
                 <path
-                  d="M5.64,17l-.71.71a1,1,0,0,0,0,1.41,1,1,0,0,0,1.41,0l.71-.71A1,1,0,0,0,5.64,17ZM5,12a1,1,0,0,0-1-1H3a1,1,0,0,0,0,2H4A1,1,0,0,0,5,12Zm7-7a1,1,0,0,0,1-1V3a1,1,0,0,0-2,0V4A1,1,0,0,0,12,5ZM5.64,7.05a1,1,0,0,0,.7.29,1,1,0,0,0,.71-.29,1,1,0,0,0,0-1.41l-.71-.71A1,1,0,0,0,4.93,6.34Zm12,.29a1,1,0,0,0,.7-.29l.71-.71a1,1,0,1,0-1.41-1.41L17,5.64a1,1,0,0,0,0,1.41A1,1,0,0,0,17.66,7.34ZM21,11H20a1,1,0,0,0,0,2h1a1,1,0,0,0,0-2Zm-9,8a1,1,0,0,0-1,1v1a1,1,0,0,0,2,0V20A1,1,0,0,0,12,19ZM18.36,17A1,1,0,0,0,17,18.36l.71.71a1,1,0,0,0,1.41,0,1,1,0,0,0,0-1.41ZM12,6.5A5.5,5.5,0,1,0,17.5,12,5.51,5.51,0,0,0,12,6.5Zm0,9A3.5,3.5,0,1,1,15.5,12,3.5,3.5,0,0,1,12,15.5Z" />
+                  d="M5.64,17l-.71.71a1,1,0,0,0,0,1.41,1,1,0,0,0,1.41,0l.71-.71A1,1,0,0,0,5.64,17ZM5,12a1,1,0,0,0-1-1H3a1,1,0,0,0,0,2H4A1,1,0,0,0,5,12Zm7-7a1,1,0,0,0,1-1V3a1,1,0,0,0-2,0V4A1,1,0,0,0,12,5ZM5.64,7.05a1,1,0,0,0,.7.29,1,1,0,0,0,.71-.29,1,1,0,0,0,0-1.41l-.71-.71A1,1,0,0,0,4.93,6.34Zm12,.29a1,1,0,0,0,.7-.29l.71-.71a1,1,0,1,0-1.41-1.41L17,5.64a1,1,0,0,0,0,1.41A1,1,0,0,0,17.66,7.34ZM21,11H20a1,1,0,0,0,0,2h1a1,1,0,0,0,0-2Zm-9,8a1,1,0,0,0-1,1v1a1,1,0,0,0,2,0V20A1,1,0,0,0,12,19ZM18.36,17A1,1,0,0,0,17,18.36l.71.71a1,1,0,0,0,1.41,0,1,1,0,0,0,0-1.41ZM12,6.5A5.5,5.5,0,1,0,17.5,12,5.51,5.51,0,0,0,12,6.5Zm0,9A3.5,3.5,0,1,1,15.5,12,3.5,3.5,0,0,1,12,15.5Z"
+                />
               </svg>
 
               <!-- moon icon (shown when checked / light mode) -->
               <svg
                 class="swap-on h-5 w-5 fill-current"
                 xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24">
+                viewBox="0 0 24 24"
+              >
                 <path
-                  d="M21.64,13a1,1,0,0,0-1.05-.14,8.05,8.05,0,0,1-3.37.73A8.15,8.15,0,0,1,9.08,5.49a8.59,8.59,0,0,1,.25-2A1,1,0,0,0,8,2.36,10.14,10.14,0,1,0,22,14.05,1,1,0,0,0,21.64,13Zm-9.5,6.69A8.14,8.14,0,0,1,7.08,5.22v.27A10.15,10.15,0,0,0,17.22,15.63a9.79,9.79,0,0,0,2.1-.22A8.11,8.11,0,0,1,12.14,19.73Z" />
+                  d="M21.64,13a1,1,0,0,0-1.05-.14,8.05,8.05,0,0,1-3.37.73A8.15,8.15,0,0,1,9.08,5.49a8.59,8.59,0,0,1,.25-2A1,1,0,0,0,8,2.36,10.14,10.14,0,1,0,22,14.05,1,1,0,0,0,21.64,13Zm-9.5,6.69A8.14,8.14,0,0,1,7.08,5.22v.27A10.15,10.15,0,0,0,17.22,15.63a9.79,9.79,0,0,0,2.1-.22A8.11,8.11,0,0,1,12.14,19.73Z"
+                />
               </svg>
             </label>
           </div>
@@ -102,7 +100,9 @@
           >
             Halo, saya Adrian Pratama
           </h1>
-          <p class="text-base sm:text-body-lg text-on-surface-variant leading-relaxed">
+          <p
+            class="text-base sm:text-body-lg text-on-surface-variant leading-relaxed"
+          >
             Mahasiswa dan praktisi yang mendalami Cybersecurity serta Linux
             System Administration. Berbagi catatan teknis, panduan lab, dan
             perjalanan belajar secara terbuka.
@@ -147,7 +147,9 @@
       <!-- 2. Focus & Core Domains (Fokus Pada Bidang Apa) -->
       <section class="space-y-6">
         <div class="border-l-2 border-primary pl-4">
-          <h2 class="text-2xl sm:text-headline-lg text-on-surface font-headline-lg font-semibold">
+          <h2
+            class="text-2xl sm:text-headline-lg text-on-surface font-headline-lg font-semibold"
+          >
             Bidang Fokus
           </h2>
           <p class="text-sm sm:text-body-md text-on-surface-variant mt-1">
@@ -159,10 +161,14 @@
             class="bg-surface-container-low border border-outline-variant rounded p-5 sm:p-6 flex flex-col justify-between space-y-4 hover:border-primary/50 transition-colors"
           >
             <div class="space-y-2">
-              <h3 class="text-lg sm:text-headline-sm text-on-surface font-headline-sm font-medium">
+              <h3
+                class="text-lg sm:text-headline-sm text-on-surface font-headline-sm font-medium"
+              >
                 Keamanan Siber
               </h3>
-              <p class="text-sm sm:text-body-md text-on-surface-variant leading-relaxed">
+              <p
+                class="text-sm sm:text-body-md text-on-surface-variant leading-relaxed"
+              >
                 Eksplorasi penetration testing, simulasi serangan etis, dan
                 analisis kerentanan sistem serta web application security.
               </p>
@@ -179,10 +185,14 @@
             class="bg-surface-container-low border border-outline-variant rounded p-5 sm:p-6 flex flex-col justify-between space-y-4 hover:border-secondary/50 transition-colors"
           >
             <div class="space-y-2">
-              <h3 class="text-lg sm:text-headline-sm text-on-surface font-headline-sm font-medium">
+              <h3
+                class="text-lg sm:text-headline-sm text-on-surface font-headline-sm font-medium"
+              >
                 Administrasi Linux
               </h3>
-              <p class="text-sm sm:text-body-md text-on-surface-variant leading-relaxed">
+              <p
+                class="text-sm sm:text-body-md text-on-surface-variant leading-relaxed"
+              >
                 Konfigurasi server berbasis Debian dan RHEL, otomatisasi
                 container dengan Docker, dan penerapan hardening sistem.
               </p>
@@ -199,10 +209,14 @@
             class="bg-surface-container-low border border-outline-variant rounded p-5 sm:p-6 flex flex-col justify-between space-y-4 hover:border-tertiary/50 transition-colors"
           >
             <div class="space-y-2">
-              <h3 class="text-lg sm:text-headline-sm text-on-surface font-headline-sm font-medium">
+              <h3
+                class="text-lg sm:text-headline-sm text-on-surface font-headline-sm font-medium"
+              >
                 Jaringan &amp; Cloud
               </h3>
-              <p class="text-sm sm:text-body-md text-on-surface-variant leading-relaxed">
+              <p
+                class="text-sm sm:text-body-md text-on-surface-variant leading-relaxed"
+              >
                 Perancangan topologi jaringan aman, manajemen firewall, isolasi
                 VLAN, dan konfigurasi VPN terenkripsi.
               </p>
@@ -220,11 +234,14 @@
       <!-- 3. Learning Tracker: Sedang Belajar & Telah Belajar -->
       <section class="space-y-6" id="learning">
         <div class="border-l-2 border-secondary pl-4">
-          <h2 class="text-2xl sm:text-headline-lg text-on-surface font-headline-lg font-semibold">
+          <h2
+            class="text-2xl sm:text-headline-lg text-on-surface font-headline-lg font-semibold"
+          >
             Aktivitas Belajar
           </h2>
           <p class="text-sm sm:text-body-md text-on-surface-variant mt-1">
-            Progres materi yang sedang dipelajari dan sertifikasi atau lab yang telah selesai.
+            Progres materi yang sedang dipelajari dan sertifikasi atau lab yang
+            telah selesai.
           </p>
         </div>
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-5 sm:gap-6">
@@ -238,11 +255,14 @@
             </h3>
             <div class="space-y-5">
               <div class="space-y-2">
-                <div class="flex justify-between items-center text-sm sm:text-body-md">
+                <div
+                  class="flex justify-between items-center text-sm sm:text-body-md"
+                >
                   <span class="text-on-surface font-medium"
                     >Persiapan Sertifikasi eJPTv2</span
                   >
-                  <span class="text-primary text-xs sm:text-body-sm font-mono font-semibold"
+                  <span
+                    class="text-primary text-xs sm:text-body-sm font-mono font-semibold"
                     >75%</span
                   >
                 </div>
@@ -255,16 +275,20 @@
                   ></div>
                 </div>
                 <p class="text-xs sm:text-body-sm text-on-surface-variant">
-                  Penetration testing fundamentals dan metodologi assessment jaringan.
+                  Penetration testing fundamentals dan metodologi assessment
+                  jaringan.
                 </p>
               </div>
 
               <div class="space-y-2">
-                <div class="flex justify-between items-center text-sm sm:text-body-md">
+                <div
+                  class="flex justify-between items-center text-sm sm:text-body-md"
+                >
                   <span class="text-on-surface font-medium"
                     >Active Directory &amp; Enterprise Security</span
                   >
-                  <span class="text-secondary text-xs sm:text-body-sm font-mono font-semibold"
+                  <span
+                    class="text-secondary text-xs sm:text-body-sm font-mono font-semibold"
                     >60%</span
                   >
                 </div>
@@ -277,16 +301,20 @@
                   ></div>
                 </div>
                 <p class="text-xs sm:text-body-sm text-on-surface-variant">
-                  Eksplorasi hak akses domain, attack path, dan keamanan infrastruktur Windows.
+                  Eksplorasi hak akses domain, attack path, dan keamanan
+                  infrastruktur Windows.
                 </p>
               </div>
 
               <div class="space-y-2">
-                <div class="flex justify-between items-center text-sm sm:text-body-md">
+                <div
+                  class="flex justify-between items-center text-sm sm:text-body-md"
+                >
                   <span class="text-on-surface font-medium"
                     >Skrip Otomasi Bash &amp; Python</span
                   >
-                  <span class="text-primary text-xs sm:text-body-sm font-mono font-semibold"
+                  <span
+                    class="text-primary text-xs sm:text-body-sm font-mono font-semibold"
                     >85%</span
                   >
                 </div>
@@ -299,7 +327,8 @@
                   ></div>
                 </div>
                 <p class="text-xs sm:text-body-sm text-on-surface-variant">
-                  Pembuatan skrip audit berkala dan otomasi tugas administrasi server.
+                  Pembuatan skrip audit berkala dan otomasi tugas administrasi
+                  server.
                 </p>
               </div>
             </div>
@@ -317,15 +346,21 @@
               <div
                 class="flex items-start gap-3 p-3 bg-surface-container rounded border border-outline-variant/30 hover:border-primary/40 transition-colors"
               >
-                <span class="material-symbols-outlined text-primary mt-0.5 shrink-0"
+                <span
+                  class="material-symbols-outlined text-primary mt-0.5 shrink-0"
                   >check_circle</span
                 >
                 <div>
-                  <h4 class="text-sm sm:text-body-md text-on-surface font-medium">
+                  <h4
+                    class="text-sm sm:text-body-md text-on-surface font-medium"
+                  >
                     CompTIA Security+ Fundamentals
                   </h4>
-                  <p class="text-xs sm:text-body-sm text-on-surface-variant mt-0.5">
-                    Pemahaman konsep dasar keamanan informasi, kriptografi, dan manajemen risiko.
+                  <p
+                    class="text-xs sm:text-body-sm text-on-surface-variant mt-0.5"
+                  >
+                    Pemahaman konsep dasar keamanan informasi, kriptografi, dan
+                    manajemen risiko.
                   </p>
                 </div>
               </div>
@@ -333,15 +368,21 @@
               <div
                 class="flex items-start gap-3 p-3 bg-surface-container rounded border border-outline-variant/30 hover:border-primary/40 transition-colors"
               >
-                <span class="material-symbols-outlined text-primary mt-0.5 shrink-0"
+                <span
+                  class="material-symbols-outlined text-primary mt-0.5 shrink-0"
                   >check_circle</span
                 >
                 <div>
-                  <h4 class="text-sm sm:text-body-md text-on-surface font-medium">
+                  <h4
+                    class="text-sm sm:text-body-md text-on-surface font-medium"
+                  >
                     Linux System Administration (LPIC-1)
                   </h4>
-                  <p class="text-xs sm:text-body-sm text-on-surface-variant mt-0.5">
-                    Pengelolaan file system, permission, manajemen paket, dan konfigurasi boot Linux.
+                  <p
+                    class="text-xs sm:text-body-sm text-on-surface-variant mt-0.5"
+                  >
+                    Pengelolaan file system, permission, manajemen paket, dan
+                    konfigurasi boot Linux.
                   </p>
                 </div>
               </div>
@@ -349,15 +390,21 @@
               <div
                 class="flex items-start gap-3 p-3 bg-surface-container rounded border border-outline-variant/30 hover:border-primary/40 transition-colors"
               >
-                <span class="material-symbols-outlined text-primary mt-0.5 shrink-0"
+                <span
+                  class="material-symbols-outlined text-primary mt-0.5 shrink-0"
                   >check_circle</span
                 >
                 <div>
-                  <h4 class="text-sm sm:text-body-md text-on-surface font-medium">
+                  <h4
+                    class="text-sm sm:text-body-md text-on-surface font-medium"
+                  >
                     45+ Lab Praktik HackTheBox &amp; TryHackMe
                   </h4>
-                  <p class="text-xs sm:text-body-sm text-on-surface-variant mt-0.5">
-                    Penyelesaian tantangan mesin CTF Linux dan Windows berbagai tingkat kesulitan.
+                  <p
+                    class="text-xs sm:text-body-sm text-on-surface-variant mt-0.5"
+                  >
+                    Penyelesaian tantangan mesin CTF Linux dan Windows berbagai
+                    tingkat kesulitan.
                   </p>
                 </div>
               </div>
@@ -365,15 +412,21 @@
               <div
                 class="flex items-start gap-3 p-3 bg-surface-container rounded border border-outline-variant/30 hover:border-primary/40 transition-colors"
               >
-                <span class="material-symbols-outlined text-primary mt-0.5 shrink-0"
+                <span
+                  class="material-symbols-outlined text-primary mt-0.5 shrink-0"
                   >check_circle</span
                 >
                 <div>
-                  <h4 class="text-sm sm:text-body-md text-on-surface font-medium">
+                  <h4
+                    class="text-sm sm:text-body-md text-on-surface font-medium"
+                  >
                     Implementasi Home Lab Virtualisasi
                   </h4>
-                  <p class="text-xs sm:text-body-sm text-on-surface-variant mt-0.5">
-                    Konfigurasi server Proxmox VE dengan isolasi firewall pfSense dan segmentasi jaringan.
+                  <p
+                    class="text-xs sm:text-body-sm text-on-surface-variant mt-0.5"
+                  >
+                    Konfigurasi server Proxmox VE dengan isolasi firewall
+                    pfSense dan segmentasi jaringan.
                   </p>
                 </div>
               </div>
@@ -388,11 +441,14 @@
           class="flex flex-col sm:flex-row sm:items-end justify-between gap-3 sm:gap-4 border-l-2 border-primary pl-4"
         >
           <div>
-            <h2 class="text-2xl sm:text-headline-lg text-on-surface font-headline-lg font-semibold">
+            <h2
+              class="text-2xl sm:text-headline-lg text-on-surface font-headline-lg font-semibold"
+            >
               Artikel Pilihan
             </h2>
             <p class="text-sm sm:text-body-md text-on-surface-variant mt-1">
-              Tulisan dan catatan panduan praktis seputar Linux dan keamanan siber.
+              Tulisan dan catatan panduan praktis seputar Linux dan keamanan
+              siber.
             </p>
           </div>
           <a
@@ -408,7 +464,8 @@
             class="bg-surface-container-low border border-outline-variant hover:border-primary transition-all duration-200 rounded p-5 sm:p-6 flex flex-col justify-between space-y-4 group"
           >
             <div class="space-y-3">
-              <span class="text-xs sm:text-body-sm text-on-surface-variant font-mono"
+              <span
+                class="text-xs sm:text-body-sm text-on-surface-variant font-mono"
                 >12 Mei 2025</span
               >
               <h3
@@ -418,8 +475,11 @@
                   >Hardening Server Linux dengan Ansible dan Standar CIS</a
                 >
               </h3>
-              <p class="text-xs sm:text-body-md text-on-surface-variant leading-relaxed">
-                Panduan menyusun playbook otomatis untuk menerapkan standar keamanan level 1 dan 2 pada server Debian.
+              <p
+                class="text-xs sm:text-body-md text-on-surface-variant leading-relaxed"
+              >
+                Panduan menyusun playbook otomatis untuk menerapkan standar
+                keamanan level 1 dan 2 pada server Debian.
               </p>
             </div>
             <div
@@ -442,7 +502,8 @@
             class="bg-surface-container-low border border-outline-variant hover:border-secondary transition-all duration-200 rounded p-5 sm:p-6 flex flex-col justify-between space-y-4 group"
           >
             <div class="space-y-3">
-              <span class="text-xs sm:text-body-sm text-on-surface-variant font-mono"
+              <span
+                class="text-xs sm:text-body-sm text-on-surface-variant font-mono"
                 >28 April 2025</span
               >
               <h3
@@ -452,8 +513,11 @@
                   >Analisis Privilege Escalation pada Kernel Linux</a
                 >
               </h3>
-              <p class="text-xs sm:text-body-md text-on-surface-variant leading-relaxed">
-                Membedah miskonfigurasi hak akses SUID dan teknik eskalasi hak akses di lingkungan laboratorium simulasi.
+              <p
+                class="text-xs sm:text-body-md text-on-surface-variant leading-relaxed"
+              >
+                Membedah miskonfigurasi hak akses SUID dan teknik eskalasi hak
+                akses di lingkungan laboratorium simulasi.
               </p>
             </div>
             <div
@@ -476,7 +540,8 @@
             class="bg-surface-container-low border border-outline-variant hover:border-tertiary transition-all duration-200 rounded p-5 sm:p-6 flex flex-col justify-between space-y-4 group"
           >
             <div class="space-y-3">
-              <span class="text-xs sm:text-body-sm text-on-surface-variant font-mono"
+              <span
+                class="text-xs sm:text-body-sm text-on-surface-variant font-mono"
                 >09 April 2025</span
               >
               <h3
@@ -486,8 +551,11 @@
                   >Membangun Active Directory Lab untuk Red Teaming</a
                 >
               </h3>
-              <p class="text-xs sm:text-body-md text-on-surface-variant leading-relaxed">
-                Langkah demi langkah menyiapkan Domain Controller dan workstation pengujian menggunakan Proxmox VE.
+              <p
+                class="text-xs sm:text-body-md text-on-surface-variant leading-relaxed"
+              >
+                Langkah demi langkah menyiapkan Domain Controller dan
+                workstation pengujian menggunakan Proxmox VE.
               </p>
             </div>
             <div
@@ -511,11 +579,14 @@
       <!-- 5. Direct Email Contact Section -->
       <section class="space-y-6 max-w-3xl" id="contact">
         <div class="border-l-2 border-primary pl-4">
-          <h2 class="text-2xl sm:text-headline-lg text-on-surface font-headline-lg font-semibold">
+          <h2
+            class="text-2xl sm:text-headline-lg text-on-surface font-headline-lg font-semibold"
+          >
             Kirim Pesan
           </h2>
           <p class="text-sm sm:text-body-md text-on-surface-variant mt-1">
-            Tertarik berdiskusi atau menawarkan kolaborasi? Silakan kirimkan pesan melalui form di bawah ini.
+            Tertarik berdiskusi atau menawarkan kolaborasi? Silakan kirimkan
+            pesan melalui form di bawah ini.
           </p>
         </div>
         <div
@@ -576,7 +647,9 @@
                 <span>Kirim Pesan</span>
                 <span class="material-symbols-outlined text-sm">send</span>
               </button>
-              <div class="text-xs sm:text-body-sm text-on-surface-variant font-mono">
+              <div
+                class="text-xs sm:text-body-sm text-on-surface-variant font-mono"
+              >
                 Email langsung:
                 <a
                   class="text-primary hover:underline font-mono"
