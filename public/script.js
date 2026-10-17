@@ -3,7 +3,19 @@
  * Tailwind CSS + DaisyUI Standalone Implementation
  */
 
+// Immediate Theme Initialization (runs as early as possible)
+(function initThemeEarly() {
+  const savedTheme = localStorage.getItem('theme') || 'dark';
+  document.documentElement.setAttribute('data-theme', savedTheme);
+  if (savedTheme === 'dark') {
+    document.documentElement.classList.add('dark');
+  } else {
+    document.documentElement.classList.remove('dark');
+  }
+})();
+
 document.addEventListener('DOMContentLoaded', () => {
+  initThemeController();
   initClipboardCopy();
   initArticleFilters();
   initArticleSearch();
@@ -13,6 +25,58 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 /**
+ * DaisyUI Theme Controller & Storage Sync
+ */
+function initThemeController() {
+  const savedTheme = localStorage.getItem('theme') || 'dark';
+  const controllers = document.querySelectorAll('.theme-controller');
+
+  // Sync all theme-controller toggles with active theme
+  controllers.forEach((toggle) => {
+    // If the checkbox has value="light", it is checked when light mode is active
+    if (toggle.value === 'light') {
+      toggle.checked = (savedTheme === 'light');
+    } else if (toggle.value === 'dark') {
+      toggle.checked = (savedTheme === 'dark');
+    }
+  });
+
+  // Global change listener for any theme-controller checkbox
+  document.addEventListener('change', (e) => {
+    if (e.target && e.target.matches('.theme-controller')) {
+      let newTheme = 'dark';
+      if (e.target.value === 'light') {
+        newTheme = e.target.checked ? 'light' : 'dark';
+      } else {
+        newTheme = e.target.checked ? e.target.value : 'dark';
+      }
+
+      applyTheme(newTheme);
+      showToast(newTheme === 'light' ? 'Mode terang diaktifkan' : 'Mode gelap diaktifkan', 'info');
+    }
+  });
+}
+
+function applyTheme(theme) {
+  document.documentElement.setAttribute('data-theme', theme);
+  if (theme === 'dark') {
+    document.documentElement.classList.add('dark');
+  } else {
+    document.documentElement.classList.remove('dark');
+  }
+  localStorage.setItem('theme', theme);
+
+  // Sync all checkboxes on page
+  document.querySelectorAll('.theme-controller').forEach((toggle) => {
+    if (toggle.value === 'light') {
+      toggle.checked = (theme === 'light');
+    } else if (toggle.value === 'dark') {
+      toggle.checked = (theme === 'dark');
+    }
+  });
+}
+
+/**
  * Toast Notification Helper (DaisyUI compatible)
  */
 function showToast(message, type = 'success') {
@@ -20,16 +84,18 @@ function showToast(message, type = 'success') {
   if (!toastContainer) {
     toastContainer = document.createElement('div');
     toastContainer.id = 'seclog-toast-container';
-    toastContainer.className = 'toast toast-top toast-end z-50 fixed top-4 right-4 flex flex-col gap-2';
+    toastContainer.className = 'toast toast-top toast-end z-50 fixed top-4 right-4 flex flex-col gap-2 pointer-events-none';
     document.body.appendChild(toastContainer);
   }
 
   const alert = document.createElement('div');
-  const alertColor = type === 'success' ? 'bg-primary text-on-primary-fixed' : 'bg-surface-container-high text-on-surface';
-  alert.className = `alert ${alertColor} shadow-lg py-2 px-4 rounded text-xs font-mono flex items-center gap-2 border border-outline-variant transition-all duration-300 transform translate-y-[-10px] opacity-0`;
+  const alertColor = type === 'success' 
+    ? 'bg-primary text-on-primary-fixed border-primary' 
+    : 'bg-surface-container-high text-on-surface border-outline-variant';
+  alert.className = `alert ${alertColor} shadow-xl py-2.5 px-4 rounded-lg text-xs font-mono flex items-center gap-2.5 border transition-all duration-300 transform translate-y-[-10px] opacity-0 pointer-events-auto`;
   alert.innerHTML = `
-    <span class="material-symbols-outlined text-sm">${type === 'success' ? 'check_circle' : 'info'}</span>
-    <span>${message}</span>
+    <span class="material-symbols-outlined text-sm shrink-0">${type === 'success' ? 'check_circle' : 'info'}</span>
+    <span class="font-medium">${message}</span>
   `;
 
   toastContainer.appendChild(alert);
@@ -50,14 +116,12 @@ function showToast(message, type = 'success') {
  * Code Copy Button Handler
  */
 function initClipboardCopy() {
-  const copyButtons = document.querySelectorAll('button:has(.material-symbols-outlined:contains("content_copy")), button');
-
   document.querySelectorAll('button').forEach((btn) => {
     const text = btn.innerText.trim();
     if (text.includes('Salin') || text.includes('Copy')) {
       btn.addEventListener('click', (e) => {
         e.preventDefault();
-        const container = btn.closest('.rounded');
+        const container = btn.closest('.rounded, .overflow-hidden, article, section');
         let codeText = '';
 
         if (container) {
@@ -127,7 +191,7 @@ function initArticleFilters() {
  */
 function initArticleSearch() {
   const searchInput = document.querySelector('input[data-article-search]');
-  const articles = document.querySelectorAll('article');
+  const articles = document.querySelectorAll('#articles-container article, article[data-category]');
 
   if (!searchInput || !articles.length) return;
 
@@ -156,7 +220,6 @@ function initContactForm() {
     e.preventDefault();
     const nameInput = form.querySelector('#caller_name');
     const emailInput = form.querySelector('#caller_email');
-    const msgInput = form.querySelector('#transmission_body');
 
     if (!nameInput?.value || !emailInput?.value) return;
 

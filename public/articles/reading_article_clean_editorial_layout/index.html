@@ -8,6 +8,19 @@
       root@adrian:~#
     </title>
 
+    <!-- Theme Initialization (prevents FOUC) -->
+    <script>
+      (function () {
+        const theme = localStorage.getItem("theme") || "dark";
+        document.documentElement.setAttribute("data-theme", theme);
+        if (theme === "dark") {
+          document.documentElement.classList.add("dark");
+        } else {
+          document.documentElement.classList.remove("dark");
+        }
+      })();
+    </script>
+
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com" rel="preconnect" />
     <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
@@ -18,22 +31,22 @@
 
     <!-- Compiled Tailwind CSS + DaisyUI -->
     <link rel="stylesheet" href="../../output.css" />
-    <script src="../script.js" defer></script>
+    <script src="../../script.js" defer></script>
   </head>
   <body
-    class="bg-background text-on-surface antialiased selection:bg-primary-container selection:text-on-primary-container min-h-screen flex flex-col justify-between font-body-md"
+    class="bg-background text-on-surface antialiased selection:bg-primary-container selection:text-on-primary-container min-h-screen flex flex-col justify-between font-body-md transition-colors duration-200"
   >
     <!-- ================= TOP NAV BAR (Shared Component) ================= -->
     <header
-      class="bg-surface border-b border-outline-variant sticky top-0 z-50"
+      class="bg-surface border-b border-outline-variant sticky top-0 z-50 transition-colors duration-200"
     >
       <div
-        class="flex justify-between items-center w-full px-6 py-3 max-w-7xl mx-auto"
+        class="flex justify-between items-center w-full px-4 sm:px-6 py-3 max-w-7xl mx-auto gap-2"
       >
         <!-- Product Name / Brand Logo -->
         <a
-          class="font-medium text-on-surface hover:text-primary transition-colors text-base tracking-tight flex items-center gap-2"
-          href="../"
+          class="font-medium text-on-surface hover:text-primary transition-colors text-sm sm:text-base tracking-tight flex items-center gap-2 font-mono shrink-0"
+          href="../../"
         >
           <span
             class="inline-block w-2 h-2 rounded-full bg-primary animate-pulse"
@@ -41,52 +54,59 @@
           Adrian Pratama
         </a>
 
-        <!-- Navigation Links -->
-        <nav class="hidden md:flex items-center gap-6">
-          <a
-            class="text-on-surface-variant hover:text-on-surface font-label-mono-md text-label-mono-md pb-1 transition-colors duration-150 font-mono"
-            href="../../"
-            >Home</a
-          >
-          <a
-            class="text-on-surface-variant hover:text-on-surface font-label-mono-md text-label-mono-md pb-1 transition-colors duration-150 font-mono"
-            href="../"
-            >Articles</a
-          >
-
-          <a
-            class="text-primary border-b border-primary pb-1 font-label-mono-md text-label-mono-md font-mono"
-            href="./"
-            >Reading Page</a
-          >
-        </nav>
-        <div class="">
-          <label class="swap swap-rotate">
-            <!-- this hidden checkbox controls the state -->
-            <input type="checkbox" class="theme-controller" value="light" />
-
-            <!-- sun icon -->
-            <svg
-              class="swap-off h-10 w-10 fill-current"
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
+        <!-- Navigation Links & Toggle -->
+        <div class="flex items-center gap-3 sm:gap-6">
+          <nav class="flex items-center gap-3 sm:gap-6 text-sm font-mono">
+            <a
+              class="text-on-surface-variant hover:text-on-surface pb-1 transition-colors duration-150"
+              href="../../"
+              >Home</a
             >
-              <path
-                d="M5.64,17l-.71.71a1,1,0,0,0,0,1.41,1,1,0,0,0,1.41,0l.71-.71A1,1,0,0,0,5.64,17ZM5,12a1,1,0,0,0-1-1H3a1,1,0,0,0,0,2H4A1,1,0,0,0,5,12Zm7-7a1,1,0,0,0,1-1V3a1,1,0,0,0-2,0V4A1,1,0,0,0,12,5ZM5.64,7.05a1,1,0,0,0,.7.29,1,1,0,0,0,.71-.29,1,1,0,0,0,0-1.41l-.71-.71A1,1,0,0,0,4.93,6.34Zm12,.29a1,1,0,0,0,.7-.29l.71-.71a1,1,0,1,0-1.41-1.41L17,5.64a1,1,0,0,0,0,1.41A1,1,0,0,0,17.66,7.34ZM21,11H20a1,1,0,0,0,0,2h1a1,1,0,0,0,0-2Zm-9,8a1,1,0,0,0-1,1v1a1,1,0,0,0,2,0V20A1,1,0,0,0,12,19ZM18.36,17A1,1,0,0,0,17,18.36l.71.71a1,1,0,0,0,1.41,0,1,1,0,0,0,0-1.41ZM12,6.5A5.5,5.5,0,1,0,17.5,12,5.51,5.51,0,0,0,12,6.5Zm0,9A3.5,3.5,0,1,1,15.5,12,3.5,3.5,0,0,1,12,15.5Z"
-              />
-            </svg>
-
-            <!-- moon icon -->
-            <svg
-              class="swap-on h-10 w-10 fill-current"
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
+            <a
+              class="text-on-surface-variant hover:text-on-surface pb-1 transition-colors duration-150"
+              href="../"
+              >Articles</a
             >
-              <path
-                d="M21.64,13a1,1,0,0,0-1.05-.14,8.05,8.05,0,0,1-3.37.73A8.15,8.15,0,0,1,9.08,5.49a8.59,8.59,0,0,1,.25-2A1,1,0,0,0,8,2.36,10.14,10.14,0,1,0,22,14.05,1,1,0,0,0,21.64,13Zm-9.5,6.69A8.14,8.14,0,0,1,7.08,5.22v.27A10.15,10.15,0,0,0,17.22,15.63a9.79,9.79,0,0,0,2.1-.22A8.11,8.11,0,0,1,12.14,19.73Z"
-              />
-            </svg>
-          </label>
+            <a
+              class="text-primary border-b border-primary pb-1 font-medium"
+              href="./"
+              >Reading</a
+            >
+          </nav>
+
+          <div
+            class="border-l border-outline-variant pl-3 sm:pl-6 flex items-center gap-2"
+          >
+            <label
+              class="swap swap-rotate btn btn-ghost btn-circle btn-sm text-on-surface hover:text-primary transition-colors cursor-pointer"
+              title="Ganti Tema (Light/Dark)"
+            >
+              <!-- this hidden checkbox controls the state -->
+              <input type="checkbox" class="theme-controller" value="light" />
+
+              <!-- sun icon (shown when unchecked / dark mode) -->
+              <svg
+                class="swap-off h-5 w-5 fill-current"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M5.64,17l-.71.71a1,1,0,0,0,0,1.41,1,1,0,0,0,1.41,0l.71-.71A1,1,0,0,0,5.64,17ZM5,12a1,1,0,0,0-1-1H3a1,1,0,0,0,0,2H4A1,1,0,0,0,5,12Zm7-7a1,1,0,0,0,1-1V3a1,1,0,0,0-2,0V4A1,1,0,0,0,12,5ZM5.64,7.05a1,1,0,0,0,.7.29,1,1,0,0,0,.71-.29,1,1,0,0,0,0-1.41l-.71-.71A1,1,0,0,0,4.93,6.34Zm12,.29a1,1,0,0,0,.7-.29l.71-.71a1,1,0,1,0-1.41-1.41L17,5.64a1,1,0,0,0,0,1.41A1,1,0,0,0,17.66,7.34ZM21,11H20a1,1,0,0,0,0,2h1a1,1,0,0,0,0-2Zm-9,8a1,1,0,0,0-1,1v1a1,1,0,0,0,2,0V20A1,1,0,0,0,12,19ZM18.36,17A1,1,0,0,0,17,18.36l.71.71a1,1,0,0,0,1.41,0,1,1,0,0,0,0-1.41ZM12,6.5A5.5,5.5,0,1,0,17.5,12,5.51,5.51,0,0,0,12,6.5Zm0,9A3.5,3.5,0,1,1,15.5,12,3.5,3.5,0,0,1,12,15.5Z"
+                />
+              </svg>
+
+              <!-- moon icon (shown when checked / light mode) -->
+              <svg
+                class="swap-on h-5 w-5 fill-current"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M21.64,13a1,1,0,0,0-1.05-.14,8.05,8.05,0,0,1-3.37.73A8.15,8.15,0,0,1,9.08,5.49a8.59,8.59,0,0,1,.25-2A1,1,0,0,0,8,2.36,10.14,10.14,0,1,0,22,14.05,1,1,0,0,0,21.64,13Zm-9.5,6.69A8.14,8.14,0,0,1,7.08,5.22v.27A10.15,10.15,0,0,0,17.22,15.63a9.79,9.79,0,0,0,2.1-.22A8.11,8.11,0,0,1,12.14,19.73Z"
+                />
+              </svg>
+            </label>
+          </div>
         </div>
       </div>
     </header>
@@ -94,40 +114,38 @@
     <!-- ================= MAIN CONTENT ================= -->
     <main class="flex-grow max-w-7xl w-full mx-auto px-4 md:px-6 py-6 md:py-8">
       <!-- 1. URL Path Indicator & Breadcrumb Simulation -->
-      <nav class="mb-8 flex items-center gap-2 text-body-sm text-outline">
-        <a
-          class="hover:text-primary transition-colors"
-          href="../home_clean_minimalist_portfolio/code.html"
+      <nav
+        class="mb-6 sm:mb-8 flex flex-wrap items-center gap-2 text-xs sm:text-body-sm text-outline"
+      >
+        <a class="hover:text-primary transition-colors" href="../../"
           >Beranda</a
         >
         <span class="text-outline-variant">/</span>
-        <a
-          class="hover:text-primary transition-colors"
-          href="../articles_clean_readable_catalog/code.html"
-          >Artikel</a
-        >
+        <a class="hover:text-primary transition-colors" href="../">Artikel</a>
         <span class="text-outline-variant">/</span>
-        <span class="text-on-surface-variant"
+        <span class="text-on-surface-variant font-medium"
           >Panduan Hardening Server Linux</span
         >
       </nav>
 
       <!-- 2. Article Meta Header Section -->
-      <header class="mb-12 pb-8 border-b border-outline-variant/40">
+      <header
+        class="mb-8 sm:mb-12 pb-6 sm:pb-8 border-b border-outline-variant/40"
+      >
         <div class="flex flex-wrap items-center gap-2 mb-4">
           <span
-            class="px-2.5 py-1 rounded text-body-sm bg-secondary/10 text-secondary border border-secondary/30 font-mono"
+            class="px-2.5 py-1 rounded text-xs sm:text-body-sm bg-secondary/10 text-secondary border border-secondary/30 font-mono"
           >
             Linux Sysadmin
           </span>
           <span
-            class="px-2.5 py-1 rounded text-body-sm bg-surface-container text-on-surface-variant font-mono"
+            class="px-2.5 py-1 rounded text-xs sm:text-body-sm bg-surface-container text-on-surface-variant font-mono"
           >
             CIS Benchmark v2.0
           </span>
         </div>
         <h1
-          class="text-headline-lg font-headline-lg text-on-surface mb-6 tracking-tight leading-tight md:text-[36px]"
+          class="text-2xl sm:text-3xl md:text-headline-lg font-headline-lg text-on-surface mb-6 tracking-tight leading-tight md:text-[36px] font-semibold"
         >
           Automating Linux Server Hardening with Ansible and CIS Benchmarks
         </h1>
@@ -136,16 +154,16 @@
         >
           <div class="flex items-center gap-3">
             <div
-              class="w-10 h-10 rounded-full bg-surface-container-high border border-outline flex items-center justify-center text-primary font-medium text-body-md font-mono"
+              class="w-10 h-10 rounded-full bg-surface-container-high border border-outline flex items-center justify-center text-primary font-medium text-body-md font-mono shrink-0"
             >
               AP
             </div>
             <div>
-              <div class="font-medium text-on-surface text-body-md">
+              <div class="font-medium text-on-surface text-sm sm:text-body-md">
                 Adrian Pratama
               </div>
               <div
-                class="text-body-sm text-outline flex items-center gap-1.5 font-mono"
+                class="text-xs sm:text-body-sm text-outline flex items-center gap-1.5 font-mono"
               >
                 <span>24 Oktober 2025</span>
                 <span>·</span>
@@ -155,14 +173,14 @@
           </div>
           <div class="flex items-center gap-2">
             <button
-              class="flex items-center gap-1.5 px-3 py-1.5 rounded bg-surface-container hover:bg-surface-container-high border border-outline-variant text-on-surface-variant hover:text-on-surface text-body-sm transition-colors cursor-pointer"
+              class="flex items-center gap-1.5 px-3 py-1.5 rounded bg-surface-container hover:bg-surface-container-high border border-outline-variant text-on-surface-variant hover:text-on-surface text-xs sm:text-body-sm transition-colors cursor-pointer"
               title="Bagikan Artikel"
             >
               <span class="material-symbols-outlined text-[16px]">share</span>
               <span>Bagikan</span>
             </button>
             <button
-              class="flex items-center gap-1.5 px-3 py-1.5 rounded bg-surface-container hover:bg-surface-container-high border border-outline-variant text-on-surface-variant hover:text-on-surface text-body-sm transition-colors cursor-pointer"
+              class="flex items-center gap-1.5 px-3 py-1.5 rounded bg-surface-container hover:bg-surface-container-high border border-outline-variant text-on-surface-variant hover:text-on-surface text-xs sm:text-body-sm transition-colors cursor-pointer"
               title="Simpan Artikel"
             >
               <span class="material-symbols-outlined text-[16px]"
@@ -178,10 +196,12 @@
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
         <!-- Left Column: Main Article Content (Spans 8 columns) -->
         <article
-          class="lg:col-span-8 max-w-prose space-y-8 font-body-lg text-body-lg text-on-surface-variant leading-relaxed"
+          class="lg:col-span-8 w-full max-w-full space-y-6 sm:space-y-8 font-body-lg text-sm sm:text-body-lg text-on-surface-variant leading-relaxed"
         >
           <!-- Introduction -->
-          <p class="text-on-surface leading-8 text-[17px]">
+          <p
+            class="text-on-surface leading-7 sm:leading-8 text-base sm:text-[17px]"
+          >
             Deploying bare-metal or cloud instances using default distribution
             templates presents an immediate attack surface. Standard Linux
             installations typically ship with promiscuous network daemon
@@ -205,7 +225,7 @@
           <!-- Section 1 -->
           <section class="pt-4" id="prerequisites">
             <h2
-              class="text-headline-md font-headline-md text-on-surface mb-3 flex items-center gap-2"
+              class="text-xl sm:text-headline-md font-headline-md text-on-surface mb-3 flex items-center gap-2 font-medium"
             >
               <span
                 class="text-primary font-label-mono-md text-label-mono-md font-mono"
@@ -230,13 +250,13 @@
               class="my-4 rounded bg-surface-container-low border border-outline-variant/50 overflow-hidden"
             >
               <div
-                class="flex items-center justify-between px-4 py-2 border-b border-outline-variant/30 text-body-sm text-outline"
+                class="flex items-center justify-between px-4 py-2 border-b border-outline-variant/30 text-xs sm:text-body-sm text-outline"
               >
                 <span class="font-code-inline text-code-inline font-mono"
                   >Bash</span
                 >
                 <button
-                  class="text-on-surface-variant hover:text-primary flex items-center gap-1 text-body-sm transition-colors cursor-pointer"
+                  class="text-on-surface-variant hover:text-primary flex items-center gap-1 text-xs sm:text-body-sm transition-colors cursor-pointer"
                 >
                   <span class="material-symbols-outlined text-[14px]"
                     >content_copy</span
@@ -245,7 +265,7 @@
                 </button>
               </div>
               <div
-                class="p-4 font-code-block text-code-block text-on-surface overflow-x-auto font-mono"
+                class="p-3 sm:p-4 font-code-block text-code-block text-on-surface overflow-x-auto font-mono text-xs sm:text-sm"
               >
                 <code
                   ><span class="text-primary">$</span> ansible-galaxy install
@@ -258,7 +278,7 @@
           <!-- Section 2: YAML Playbook -->
           <section class="pt-4" id="writing-playbook">
             <h2
-              class="text-headline-md font-headline-md text-on-surface mb-3 flex items-center gap-2"
+              class="text-xl sm:text-headline-md font-headline-md text-on-surface mb-3 flex items-center gap-2 font-medium"
             >
               <span
                 class="text-primary font-label-mono-md text-label-mono-md font-mono"
@@ -281,14 +301,14 @@
               class="my-4 rounded bg-surface-container-low border border-outline-variant/50 overflow-hidden"
             >
               <div
-                class="flex items-center justify-between px-4 py-2.5 border-b border-outline-variant/30 text-body-sm font-mono"
+                class="flex items-center justify-between px-4 py-2.5 border-b border-outline-variant/30 text-xs sm:text-body-sm font-mono"
               >
                 <span
                   class="font-code-inline text-code-inline text-on-surface-variant"
                   >playbooks/cis_hardening.yml</span
                 >
                 <button
-                  class="text-on-surface-variant hover:text-primary flex items-center gap-1 text-body-sm transition-colors cursor-pointer"
+                  class="text-on-surface-variant hover:text-primary flex items-center gap-1 text-xs sm:text-body-sm transition-colors cursor-pointer"
                 >
                   <span class="material-symbols-outlined text-[14px]"
                     >content_copy</span
@@ -297,7 +317,7 @@
                 </button>
               </div>
               <div
-                class="p-4 font-code-block text-code-block text-on-surface overflow-x-auto leading-relaxed text-[13px] font-mono"
+                class="p-3 sm:p-4 font-code-block text-code-block text-on-surface overflow-x-auto leading-relaxed text-xs sm:text-[13px] font-mono"
               >
                 <pre><code><span class="text-outline">---</span>
 <span class="text-primary">- name</span>: <span class="text-secondary">Execute CIS Level 1 Linux Server Remediation</span>
@@ -321,16 +341,18 @@
 
           <!-- Security Warning Callout Box -->
           <div
-            class="my-6 rounded bg-surface-container p-5 flex gap-4 items-start border-l-2 border-primary"
+            class="my-6 rounded bg-surface-container p-4 sm:p-5 flex gap-3 sm:gap-4 items-start border-l-2 border-primary"
           >
             <div class="text-primary shrink-0 mt-0.5">
               <span class="material-symbols-outlined text-[20px]">info</span>
             </div>
             <div class="space-y-1.5">
-              <h4 class="font-medium text-body-md text-on-surface">
+              <h4 class="font-medium text-sm sm:text-body-md text-on-surface">
                 Catatan Mitigasi Akses SSH
               </h4>
-              <p class="text-body-md text-on-surface-variant leading-relaxed">
+              <p
+                class="text-xs sm:text-body-md text-on-surface-variant leading-relaxed"
+              >
                 Mengatur
                 <code
                   class="font-code-inline text-code-inline text-primary bg-surface-container-high px-1 py-0.5 rounded font-mono"
@@ -350,7 +372,7 @@
           <!-- Section 3: Audit & Verification with Lynis -->
           <section class="pt-4" id="audit-verification">
             <h2
-              class="text-headline-md font-headline-md text-on-surface mb-3 flex items-center gap-2"
+              class="text-xl sm:text-headline-md font-headline-md text-on-surface mb-3 flex items-center gap-2 font-medium"
             >
               <span
                 class="text-primary font-label-mono-md text-label-mono-md font-mono"
@@ -375,7 +397,7 @@
               class="my-4 rounded bg-surface-container-low border border-outline-variant/50 overflow-hidden font-code-block text-code-block font-mono"
             >
               <div
-                class="flex items-center justify-between px-4 py-2 border-b border-outline-variant/30 text-body-sm text-outline"
+                class="flex items-center justify-between px-4 py-2 border-b border-outline-variant/30 text-xs sm:text-body-sm text-outline"
               >
                 <span>Hasil Audit Lynis</span>
                 <span class="text-primary font-medium"
@@ -383,33 +405,43 @@
                 >
               </div>
               <div
-                class="p-4 space-y-1.5 text-on-surface text-[13px] leading-relaxed"
+                class="p-3 sm:p-4 space-y-1.5 text-on-surface text-xs sm:text-[13px] leading-relaxed overflow-x-auto"
               >
                 <div class="text-outline">
                   [+] Menjalankan pemeriksaan SSH Server Configuration...
                 </div>
-                <div class="pl-3 flex justify-between text-on-surface-variant">
+                <div
+                  class="pl-3 flex justify-between text-on-surface-variant gap-4"
+                >
                   <span>SSH Daemon running</span>
-                  <span class="text-primary font-medium">OK</span>
+                  <span class="text-primary font-medium shrink-0">OK</span>
                 </div>
-                <div class="pl-3 flex justify-between text-on-surface-variant">
+                <div
+                  class="pl-3 flex justify-between text-on-surface-variant gap-4"
+                >
                   <span>PermitRootLogin disabled</span>
-                  <span class="text-primary font-medium">OK</span>
+                  <span class="text-primary font-medium shrink-0">OK</span>
                 </div>
-                <div class="pl-3 flex justify-between text-on-surface-variant">
+                <div
+                  class="pl-3 flex justify-between text-on-surface-variant gap-4"
+                >
                   <span>PasswordAuthentication disabled</span>
-                  <span class="text-primary font-medium">OK</span>
+                  <span class="text-primary font-medium shrink-0">OK</span>
                 </div>
                 <div class="text-outline pt-1">
                   [+] Menjalankan pemeriksaan Kernel Hardening (sysctl)...
                 </div>
-                <div class="pl-3 flex justify-between text-on-surface-variant">
+                <div
+                  class="pl-3 flex justify-between text-on-surface-variant gap-4"
+                >
                   <span>net.ipv4.ip_forward = 0</span>
-                  <span class="text-primary font-medium">OK</span>
+                  <span class="text-primary font-medium shrink-0">OK</span>
                 </div>
-                <div class="pl-3 flex justify-between text-on-surface-variant">
+                <div
+                  class="pl-3 flex justify-between text-on-surface-variant gap-4"
+                >
                   <span>fs.suid_dumpable = 0</span>
-                  <span class="text-primary font-medium">OK</span>
+                  <span class="text-primary font-medium shrink-0">OK</span>
                 </div>
               </div>
             </div>
@@ -418,7 +450,7 @@
           <!-- Key Takeaways -->
           <section class="pt-4" id="key-takeaways">
             <h2
-              class="text-headline-md font-headline-md text-on-surface mb-4 flex items-center gap-2"
+              class="text-xl sm:text-headline-md font-headline-md text-on-surface mb-4 flex items-center gap-2 font-medium"
             >
               <span
                 class="text-primary font-label-mono-md text-label-mono-md font-mono"
@@ -426,7 +458,9 @@
               >
               Key Takeaways &amp; Operational Tips
             </h2>
-            <ul class="space-y-3 font-body-md text-body-md list-none pl-0">
+            <ul
+              class="space-y-3 font-body-md text-xs sm:text-body-md list-none pl-0"
+            >
               <li class="flex items-start gap-3">
                 <span
                   class="material-symbols-outlined text-primary text-[18px] shrink-0 mt-0.5"
@@ -477,7 +511,7 @@
 
           <!-- Author Bio Box -->
           <div
-            class="mt-12 p-6 rounded bg-surface-container border border-outline-variant/40 flex flex-col sm:flex-row gap-4 items-start"
+            class="mt-10 sm:mt-12 p-5 sm:p-6 rounded bg-surface-container border border-outline-variant/40 flex flex-col sm:flex-row gap-4 items-start"
           >
             <div
               class="w-12 h-12 rounded-full bg-surface-container-high border border-outline flex items-center justify-center text-primary font-medium text-body-md shrink-0 font-mono"
@@ -485,23 +519,27 @@
               AP
             </div>
             <div class="space-y-1.5">
-              <div class="flex items-center justify-between gap-2">
+              <div class="flex flex-wrap items-center justify-between gap-2">
                 <div>
-                  <h3 class="text-body-md font-medium text-on-surface">
+                  <h3
+                    class="text-sm sm:text-body-md font-medium text-on-surface"
+                  >
                     Adrian Pratama
                   </h3>
-                  <p class="text-body-sm text-outline">
+                  <p class="text-xs sm:text-body-sm text-outline">
                     Lead Infrastructure SecOps &amp; Sysadmin
                   </p>
                 </div>
                 <a
-                  class="text-body-sm text-primary hover:underline transition-colors"
-                  href="../home_clean_minimalist_portfolio/code.html"
+                  class="text-xs sm:text-body-sm text-primary hover:underline transition-colors"
+                  href="../../"
                 >
                   Profil Penulis →
                 </a>
               </div>
-              <p class="text-body-sm text-on-surface-variant leading-relaxed">
+              <p
+                class="text-xs sm:text-body-sm text-on-surface-variant leading-relaxed"
+              >
                 Fokus pada declarative infrastructure, zero-trust cloud
                 topologies, dan keamanan kernel Linux. Menulis catatan berkala
                 seputar otomasi sysadmin dan panduan keamanan server.
@@ -511,17 +549,17 @@
         </article>
 
         <!-- Right Column: Sticky Sidebar (Spans 4 columns) -->
-        <aside class="lg:col-span-4 space-y-6 lg:sticky lg:top-16">
+        <aside class="lg:col-span-4 space-y-6 w-full lg:sticky lg:top-20">
           <!-- Daftar Isi -->
           <div
             class="p-5 rounded bg-surface-container border border-outline-variant/40"
           >
             <h3
-              class="font-medium text-body-sm text-on-surface uppercase tracking-wider mb-3 pb-2 border-b border-outline-variant/30 font-mono"
+              class="font-medium text-xs sm:text-body-sm text-on-surface uppercase tracking-wider mb-3 pb-2 border-b border-outline-variant/30 font-mono"
             >
               Daftar Isi
             </h3>
-            <nav class="space-y-1.5 text-body-sm">
+            <nav class="space-y-1.5 text-xs sm:text-body-sm">
               <a
                 class="block py-1 text-on-surface-variant hover:text-primary transition-colors"
                 href="#prerequisites"
@@ -554,34 +592,28 @@
             class="p-5 rounded bg-surface-container border border-outline-variant/40 space-y-3"
           >
             <h3
-              class="font-medium text-body-sm text-on-surface uppercase tracking-wider pb-2 border-b border-outline-variant/30 font-mono"
+              class="font-medium text-xs sm:text-body-sm text-on-surface uppercase tracking-wider pb-2 border-b border-outline-variant/30 font-mono"
             >
               Artikel Terkait
             </h3>
-            <a
-              class="block group py-1.5"
-              href="../articles_clean_readable_catalog/code.html"
-            >
+            <a class="block group py-1.5" href="../">
               <div
-                class="text-body-sm text-on-surface group-hover:text-primary transition-colors font-medium mb-1"
+                class="text-xs sm:text-body-sm text-on-surface group-hover:text-primary transition-colors font-medium mb-1"
               >
                 Practical Zero-Trust Architecture in Microk8s Clusters
               </div>
-              <div class="text-body-sm text-outline font-mono">
+              <div class="text-xs text-outline font-mono">
                 12 Sep 2025 · 6 min read
               </div>
             </a>
             <div class="border-t border-outline-variant/20"></div>
-            <a
-              class="block group py-1.5"
-              href="../articles_clean_readable_catalog/code.html"
-            >
+            <a class="block group py-1.5" href="../">
               <div
-                class="text-body-sm text-on-surface group-hover:text-primary transition-colors font-medium mb-1"
+                class="text-xs sm:text-body-sm text-on-surface group-hover:text-primary transition-colors font-medium mb-1"
               >
                 Automated TLS Rotation with ACME &amp; Systemd
               </div>
-              <div class="text-body-sm text-outline font-mono">
+              <div class="text-xs text-outline font-mono">
                 03 Agu 2025 · 5 min read
               </div>
             </a>
@@ -590,31 +622,33 @@
       </div>
 
       <!-- 4. Bottom Navigation & Discussion Section -->
-      <div class="mt-16 pt-8 border-t border-outline-variant/40 space-y-8">
+      <div
+        class="mt-12 sm:mt-16 pt-8 border-t border-outline-variant/40 space-y-8"
+      >
         <!-- Navigasi Artikel -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
           <a
-            class="p-5 rounded bg-surface-container border border-outline-variant/40 hover:border-primary/50 transition-colors group flex flex-col justify-between"
-            href="../articles_clean_readable_catalog/code.html"
+            class="p-4 sm:p-5 rounded bg-surface-container border border-outline-variant/40 hover:border-primary/50 transition-colors group flex flex-col justify-between"
+            href="../"
           >
-            <span class="text-body-sm text-outline mb-1 font-mono"
+            <span class="text-xs text-outline mb-1 font-mono"
               >← Artikel Sebelumnya</span
             >
             <span
-              class="text-body-md font-medium text-on-surface group-hover:text-primary transition-colors"
+              class="text-sm sm:text-body-md font-medium text-on-surface group-hover:text-primary transition-colors"
             >
               Understanding eBPF for Runtime Security
             </span>
           </a>
           <a
-            class="p-5 rounded bg-surface-container border border-outline-variant/40 hover:border-primary/50 transition-colors group flex flex-col justify-between md:text-right"
-            href="../articles_clean_readable_catalog/code.html"
+            class="p-4 sm:p-5 rounded bg-surface-container border border-outline-variant/40 hover:border-primary/50 transition-colors group flex flex-col justify-between md:text-right"
+            href="../"
           >
-            <span class="text-body-sm text-outline mb-1 font-mono"
+            <span class="text-xs text-outline mb-1 font-mono"
               >Artikel Selanjutnya →</span
             >
             <span
-              class="text-body-md font-medium text-on-surface group-hover:text-primary transition-colors"
+              class="text-sm sm:text-body-md font-medium text-on-surface group-hover:text-primary transition-colors"
             >
               Deep Dive: Linux Kernel Exploitation
             </span>
@@ -623,21 +657,23 @@
 
         <!-- Diskusi & Feedback -->
         <div
-          class="p-6 rounded bg-surface-container border border-outline-variant/40 flex flex-col sm:flex-row items-center justify-between gap-6"
+          class="p-5 sm:p-6 rounded bg-surface-container border border-outline-variant/40 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 sm:gap-6"
         >
           <div class="space-y-1">
-            <h3 class="text-headline-sm font-medium text-on-surface">
+            <h3
+              class="text-base sm:text-headline-sm font-medium text-on-surface"
+            >
               Diskusi &amp; Tanggapan
             </h3>
-            <p class="text-body-sm text-on-surface-variant max-w-xl">
+            <p class="text-xs sm:text-body-sm text-on-surface-variant max-w-xl">
               Punya pertanyaan seputar panduan konfigurasi ini atau ingin
               berbagi pengalaman? Berikan tanggapan Anda.
             </p>
           </div>
-          <div class="flex items-center gap-3 shrink-0">
+          <div class="flex items-center gap-3 shrink-0 w-full sm:w-auto">
             <a
-              class="px-4 py-2 rounded bg-surface-container-high border border-outline-variant text-body-sm text-on-surface hover:text-primary hover:border-primary transition-colors"
-              href="../home_clean_minimalist_portfolio/code.html#contact"
+              class="px-4 py-2 rounded bg-surface-container-high border border-outline-variant text-xs sm:text-body-sm text-on-surface hover:text-primary hover:border-primary transition-colors w-full sm:w-auto text-center"
+              href="../../#contact"
             >
               Tulis Komentar
             </a>
@@ -648,20 +684,19 @@
 
     <!-- ================= FOOTER (Shared Component) ================= -->
     <footer
-      class="bg-surface-container-lowest border-t border-outline-variant mt-16"
+      class="bg-surface-container-lowest border-t border-outline-variant mt-12 sm:mt-16 transition-colors duration-200"
     >
       <div
-        class="flex flex-col md:flex-row justify-between items-center w-full px-6 py-6 max-w-7xl mx-auto gap-4"
+        class="flex flex-col md:flex-row justify-between items-center w-full px-4 sm:px-6 py-6 max-w-7xl mx-auto gap-4 text-xs font-mono text-center md:text-left"
       >
         <!-- Copyright / PGP verification status -->
-        <div
-          class="font-label-mono-sm text-label-mono-sm text-on-surface-variant text-center md:text-left font-mono"
-        >
+        <div class="text-on-surface-variant">
           © 2025 adrian.sys // PGP: 4A7F 92B1 C08D E351 // All logs verified.
         </div>
+
         <!-- Navigation links -->
         <div
-          class="flex flex-wrap items-center justify-center gap-6 font-label-mono-sm text-label-mono-sm text-on-surface-variant font-mono"
+          class="flex flex-wrap items-center justify-center gap-4 sm:gap-6 text-on-surface-variant"
         >
           <a
             class="hover:text-primary transition-colors duration-150"
@@ -686,7 +721,7 @@
           >
           <a
             class="hover:text-primary transition-colors duration-150"
-            href="../articles_clean_readable_catalog/code.html#feed"
+            href="../#feed"
             >PGP Key</a
           >
         </div>
