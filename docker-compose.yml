@@ -1,0 +1,12 @@
+services:
+  pocketbase:
+    image: ghcr.io/muchobien/pocketbase:latest
+    container_name: pocketbase_personal_web
+    restart: unless-stopped
+    ports:
+      - "8090:8090"
+    volumes:
+      - ./data:/pb_data
+      - ./migrations:/pb_migrations
+      - ./public:/pb_public
+      - ./hooks:/pb_hooks
