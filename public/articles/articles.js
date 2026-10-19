@@ -1,10 +1,12 @@
 /**
  * Adrian | SecLog - Articles Page Controller (articles.js)
  * Standalone JavaScript for Halaman Artikel (articles/index.html)
- * Tailwind CSS + DaisyUI Standalone Implementation
+ * Data dimuat secara dinamis dari PocketBase REST API
  */
 
-// Immediate Theme Initialization (prevents FOUC on page load)
+// ─────────────────────────────────────────────────────────────────────────────
+// Immediate Theme Initialization (prevents FOUC)
+// ─────────────────────────────────────────────────────────────────────────────
 (function initThemeEarly() {
   const savedTheme = localStorage.getItem('theme') || 'dark';
   document.documentElement.setAttribute('data-theme', savedTheme);
@@ -17,28 +19,20 @@
 
 document.addEventListener('DOMContentLoaded', () => {
   initThemeController();
-  initArticleFiltersAndSearch();
+  loadArticlesFromPocketBase();
   initNewsletterForm();
-  initPagination();
 });
 
-/**
- * DaisyUI Theme Controller & Storage Sync
- */
+// ─────────────────────────────────────────────────────────────────────────────
+// Theme Controller
+// ─────────────────────────────────────────────────────────────────────────────
 function initThemeController() {
   const savedTheme = localStorage.getItem('theme') || 'dark';
-  const controllers = document.querySelectorAll('.theme-controller');
-
-  // Sync initial state of checkbox toggles
-  controllers.forEach((toggle) => {
-    if (toggle.value === 'light') {
-      toggle.checked = (savedTheme === 'light');
-    } else if (toggle.value === 'dark') {
-      toggle.checked = (savedTheme === 'dark');
-    }
+  document.querySelectorAll('.theme-controller').forEach((toggle) => {
+    if (toggle.value === 'light') toggle.checked = (savedTheme === 'light');
+    else if (toggle.value === 'dark') toggle.checked = (savedTheme === 'dark');
   });
 
-  // Global change listener for theme-controller checkbox
   document.addEventListener('change', (e) => {
     if (e.target && e.target.matches('.theme-controller')) {
       let newTheme = 'dark';
@@ -47,7 +41,6 @@ function initThemeController() {
       } else {
         newTheme = e.target.checked ? e.target.value : 'dark';
       }
-
       applyTheme(newTheme);
       showToast(newTheme === 'light' ? 'Mode terang diaktifkan' : 'Mode gelap diaktifkan', 'info');
     }
@@ -56,204 +49,228 @@ function initThemeController() {
 
 function applyTheme(theme) {
   document.documentElement.setAttribute('data-theme', theme);
-  if (theme === 'dark') {
-    document.documentElement.classList.add('dark');
-  } else {
-    document.documentElement.classList.remove('dark');
-  }
+  if (theme === 'dark') document.documentElement.classList.add('dark');
+  else document.documentElement.classList.remove('dark');
   localStorage.setItem('theme', theme);
-
-  // Sync all theme-controller toggles on page
   document.querySelectorAll('.theme-controller').forEach((toggle) => {
-    if (toggle.value === 'light') {
-      toggle.checked = (theme === 'light');
-    } else if (toggle.value === 'dark') {
-      toggle.checked = (theme === 'dark');
-    }
+    if (toggle.value === 'light') toggle.checked = (theme === 'light');
+    else if (toggle.value === 'dark') toggle.checked = (theme === 'dark');
   });
 }
 
-/**
- * Toast Notification Helper (DaisyUI compatible)
- */
+// ─────────────────────────────────────────────────────────────────────────────
+// Toast Notification
+// ─────────────────────────────────────────────────────────────────────────────
 function showToast(message, type = 'success') {
-  let toastContainer = document.getElementById('seclog-toast-container');
-  if (!toastContainer) {
-    toastContainer = document.createElement('div');
-    toastContainer.id = 'seclog-toast-container';
-    toastContainer.className = 'toast toast-top toast-end z-50 fixed top-4 right-4 flex flex-col gap-2 pointer-events-none';
-    document.body.appendChild(toastContainer);
+  let container = document.getElementById('seclog-toast-container');
+  if (!container) {
+    container = document.createElement('div');
+    container.id = 'seclog-toast-container';
+    container.className = 'toast toast-top toast-end z-50 fixed top-4 right-4 flex flex-col gap-2 pointer-events-none';
+    document.body.appendChild(container);
   }
 
-  const alert = document.createElement('div');
-  const alertColor = type === 'success'
-    ? 'bg-primary text-on-primary border-primary'
-    : type === 'error'
-      ? 'bg-error text-on-error border-error'
-      : 'bg-surface-container-high text-on-surface border-outline-variant';
+  const colorMap = {
+    success: 'bg-primary text-primary-content border-primary',
+    error: 'bg-error text-error-content border-error',
+    info: 'bg-base-300 text-base-content border-base-content/20',
+  };
+  const iconMap = { success: 'check_circle', error: 'error', info: 'info' };
 
-  alert.className = `alert ${alertColor} shadow-xl py-2.5 px-4 rounded-lg text-xs font-mono flex items-center gap-2.5 border transition-all duration-300 transform translate-y-[-10px] opacity-0 pointer-events-auto`;
+  const alert = document.createElement('div');
+  alert.className = `alert ${colorMap[type] || colorMap.info} shadow-xl py-2.5 px-4 rounded-lg text-xs font-mono flex items-center gap-2.5 border transition-all duration-300 transform translate-y-[-10px] opacity-0 pointer-events-auto`;
   alert.innerHTML = `
-    <span class="material-symbols-outlined text-sm shrink-0">${type === 'success' ? 'check_circle' : type === 'error' ? 'error' : 'info'}</span>
+    <span class="material-symbols-outlined text-sm shrink-0">${iconMap[type] || 'info'}</span>
     <span class="font-medium">${message}</span>
   `;
-
-  toastContainer.appendChild(alert);
-
-  // Animate in
-  requestAnimationFrame(() => {
-    alert.classList.remove('translate-y-[-10px]', 'opacity-0');
-  });
-
-  // Remove after 2.5s
+  container.appendChild(alert);
+  requestAnimationFrame(() => alert.classList.remove('translate-y-[-10px]', 'opacity-0'));
   setTimeout(() => {
     alert.classList.add('opacity-0', 'translate-y-[-10px]');
     setTimeout(() => alert.remove(), 300);
   }, 2500);
 }
 
-/**
- * Combined Article Filter & Search Controller
- */
-function initArticleFiltersAndSearch() {
-  const searchInput = document.querySelector('input[data-article-search]');
-  const filterButtons = document.querySelectorAll('button[data-filter]');
-  const articlesContainer = document.getElementById('articles-container');
-  const articles = articlesContainer ? articlesContainer.querySelectorAll('article[data-category]') : [];
+// ─────────────────────────────────────────────────────────────────────────────
+// Category badge colour helper
+// ─────────────────────────────────────────────────────────────────────────────
+function categoryBadgeClass(cat) {
+  const map = {
+    linux: 'bg-secondary/10 text-secondary border-secondary/30',
+    cybersecurity: 'bg-error/10 text-error border-error/30',
+    networking: 'bg-primary/10 text-primary border-primary/30',
+  };
+  return map[cat] || 'bg-surface-container text-on-surface-variant border-outline-variant';
+}
+
+function categoryLabel(cat) {
+  const map = {
+    linux: 'Linux',
+    cybersecurity: 'Cybersecurity',
+    networking: 'Lab & Jaringan',
+  };
+  return map[cat] || cat;
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Build one article card element
+// ─────────────────────────────────────────────────────────────────────────────
+function buildArticleCard(item) {
+  const date = item.created
+    ? new Date(item.created).toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' })
+    : '';
+
+  const tags = (item.tags || '')
+    .split(',')
+    .map(t => t.trim())
+    .filter(Boolean)
+    .slice(0, 3)
+    .map(t => `<span class="text-primary font-medium">#${t}</span>`)
+    .join('');
+
+  const article = document.createElement('article');
+  article.className = 'group bg-surface-container-low border border-outline-variant hover:border-primary transition-all duration-150 rounded-xl p-5 sm:p-6 flex flex-col justify-between';
+  article.setAttribute('data-category', item.category || '');
+  article.setAttribute('data-tags', item.tags || '');
+  article.setAttribute('data-title', (item.title || '').toLowerCase());
+  article.setAttribute('data-summary', (item.summary || '').toLowerCase());
+
+  article.innerHTML = `
+    <div class="space-y-3">
+      <div class="flex items-center gap-2 text-xs text-on-surface-variant font-mono">
+        <span>${date}</span>
+        ${item.reading_time ? `<span>•</span><span>${item.reading_time}</span>` : ''}
+      </div>
+      <h2 class="text-base sm:text-headline-sm font-headline-sm text-on-surface group-hover:text-primary transition-colors leading-snug font-medium">
+        <a class="focus:outline-none" href="/articles/${item.slug}">${item.title}</a>
+      </h2>
+      ${item.summary ? `<p class="text-xs sm:text-body-sm font-body-sm text-on-surface-variant leading-relaxed line-clamp-3">${item.summary}</p>` : ''}
+    </div>
+    <div class="mt-6 pt-4 border-t border-outline-variant flex items-center justify-between text-xs text-on-surface-variant">
+      <div class="flex gap-2 font-mono flex-wrap">${tags}</div>
+      ${item.category ? `<span class="px-2 py-0.5 rounded border text-xs font-mono capitalize ${categoryBadgeClass(item.category)}">${categoryLabel(item.category)}</span>` : ''}
+    </div>
+  `;
+  return article;
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Load articles from PocketBase and wire up filter + search
+// ─────────────────────────────────────────────────────────────────────────────
+async function loadArticlesFromPocketBase() {
+  const container = document.getElementById('articles-container');
+  if (!container) return;
+
+  // Show skeleton loader
+  container.innerHTML = `
+    <div class="col-span-1 md:col-span-2 lg:col-span-3 flex justify-center py-16">
+      <span class="loading loading-spinner loading-md text-primary"></span>
+    </div>
+  `;
+
+  let allItems = [];
+
+  try {
+    const res = await fetch('/api/collections/articles/records?filter=(status%3D"published")&sort=-created&perPage=50');
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const data = await res.json();
+    allItems = data.items || [];
+  } catch (err) {
+    console.error('[articles.js] Failed to load articles:', err);
+    container.innerHTML = `
+      <div class="col-span-1 md:col-span-2 lg:col-span-3 p-8 rounded-xl bg-surface-container border border-outline-variant text-center space-y-3">
+        <span class="material-symbols-outlined text-3xl text-outline">cloud_off</span>
+        <p class="text-on-surface font-medium text-sm">Gagal memuat artikel</p>
+        <p class="text-on-surface-variant text-xs font-mono">Pastikan server PocketBase berjalan di port 8090.</p>
+      </div>
+    `;
+    return;
+  }
+
+  // Empty state element (appended once)
+  const emptyState = document.createElement('div');
+  emptyState.id = 'articles-empty-state';
+  emptyState.className = 'col-span-1 md:col-span-2 lg:col-span-3 p-8 rounded-xl bg-surface-container border border-outline-variant text-center space-y-3 hidden';
+  emptyState.innerHTML = `
+    <div class="inline-flex items-center justify-center w-12 h-12 rounded-full bg-surface-container-high text-outline">
+      <span class="material-symbols-outlined text-2xl">search_off</span>
+    </div>
+    <p class="text-on-surface font-medium text-sm">Tidak ditemukan artikel yang sesuai</p>
+    <p class="text-on-surface-variant text-xs font-mono">Coba ubah kata kunci atau pilih kategori lain.</p>
+  `;
+
+  // Counter label
   const countLabel = document.querySelector('.border-t span.font-mono');
 
-  if (!articles.length) return;
-
+  // Render & filter logic
   let activeCategory = 'all';
   let searchQuery = '';
 
-  // Empty state container element
-  let emptyState = document.getElementById('articles-empty-state');
-  if (!emptyState && articlesContainer) {
-    emptyState = document.createElement('div');
-    emptyState.id = 'articles-empty-state';
-    emptyState.className = 'col-span-1 md:col-span-2 lg:col-span-3 p-8 rounded-xl bg-surface-container border border-outline-variant text-center space-y-3 hidden';
-    emptyState.innerHTML = `
-      <div class="inline-flex items-center justify-center w-12 h-12 rounded-full bg-surface-container-high text-outline">
-        <span class="material-symbols-outlined text-2xl">search_off</span>
-      </div>
-      <p class="text-on-surface font-medium text-sm">Tidak ditemukan artikel yang sesuai</p>
-      <p class="text-on-surface-variant text-xs font-mono">Coba ubah kata kunci pencarian atau pilih kategori lain.</p>
-    `;
-    articlesContainer.appendChild(emptyState);
-  }
+  function render() {
+    // Remove old cards (keep emptyState if already appended)
+    container.querySelectorAll('article').forEach(el => el.remove());
+    const emptyEl = container.querySelector('#articles-empty-state');
+    if (emptyEl) emptyEl.remove();
 
-  function filterArticles() {
-    let visibleCount = 0;
-    const totalCount = articles.length;
-
-    articles.forEach((art) => {
-      const categoryData = (art.getAttribute('data-category') || '').toLowerCase();
-      const contentText = art.innerText.toLowerCase();
-
-      const matchesCategory = (activeCategory === 'all') || categoryData.includes(activeCategory.toLowerCase());
-      const matchesSearch = !searchQuery || contentText.includes(searchQuery);
-
-      if (matchesCategory && matchesSearch) {
-        art.classList.remove('hidden');
-        visibleCount++;
-      } else {
-        art.classList.add('hidden');
-      }
+    const filtered = allItems.filter(item => {
+      const matchCat = activeCategory === 'all' || (item.category || '') === activeCategory;
+      const searchIn = `${item.title} ${item.summary} ${item.tags}`.toLowerCase();
+      const matchSearch = !searchQuery || searchIn.includes(searchQuery);
+      return matchCat && matchSearch;
     });
 
-    // Update empty state
-    if (emptyState) {
-      if (visibleCount === 0) {
-        emptyState.classList.remove('hidden');
-      } else {
-        emptyState.classList.add('hidden');
-      }
+    if (!filtered.length) {
+      container.appendChild(emptyState);
+      emptyState.classList.remove('hidden');
+    } else {
+      emptyState.classList.add('hidden');
+      filtered.forEach(item => container.appendChild(buildArticleCard(item)));
     }
 
-    // Update counter label if present
     if (countLabel) {
-      countLabel.textContent = `Menampilkan ${visibleCount} dari ${totalCount} artikel`;
+      countLabel.textContent = `Menampilkan ${filtered.length} dari ${allItems.length} artikel`;
     }
   }
 
-  // Filter buttons listener
+  render();
+
+  // Filter buttons
+  const filterButtons = document.querySelectorAll('button[data-filter]');
   filterButtons.forEach((btn) => {
     btn.addEventListener('click', () => {
       activeCategory = btn.getAttribute('data-filter') || 'all';
-
-      // Update button styling
-      filterButtons.forEach((b) => {
+      filterButtons.forEach(b => {
         b.classList.remove('bg-primary', 'text-on-primary');
         b.classList.add('bg-surface-container', 'border', 'border-outline-variant', 'text-on-surface-variant');
       });
       btn.classList.add('bg-primary', 'text-on-primary');
       btn.classList.remove('bg-surface-container', 'border-outline-variant', 'text-on-surface-variant');
-
-      filterArticles();
+      render();
     });
   });
 
-  // Search input listener
+  // Search input
+  const searchInput = document.querySelector('input[data-article-search]');
   if (searchInput) {
     searchInput.addEventListener('input', (e) => {
       searchQuery = e.target.value.toLowerCase().trim();
-      filterArticles();
+      render();
     });
   }
 }
 
-/**
- * Newsletter Form Handler
- */
+// ─────────────────────────────────────────────────────────────────────────────
+// Newsletter Form
+// ─────────────────────────────────────────────────────────────────────────────
 function initNewsletterForm() {
   const form = document.querySelector('#feed form');
   if (!form) return;
-
-  // Remove inline onsubmit if present
   form.removeAttribute('onsubmit');
-
   form.addEventListener('submit', (e) => {
     e.preventDefault();
     const emailInput = form.querySelector('input[type="email"]');
     if (!emailInput?.value) return;
-
-    showToast(`Terima kasih! Email ${emailInput.value} telah terdaftar untuk berlangganan pembaruan artikel.`, 'success');
+    showToast(`Terima kasih! Email ${emailInput.value} telah terdaftar.`, 'success');
     form.reset();
-  });
-}
-
-/**
- * Pagination Click Interactivity
- */
-function initPagination() {
-  const paginationButtons = document.querySelectorAll('.border-t .flex button');
-  if (!paginationButtons.length) return;
-
-  paginationButtons.forEach((btn) => {
-    btn.addEventListener('click', () => {
-      const text = btn.innerText.trim();
-      if (text === '1') {
-        // Page 1 is active
-        paginationButtons.forEach(b => {
-          if (b.innerText.trim() === '1') {
-            b.className = 'w-8 h-8 rounded-full bg-primary text-on-primary font-medium flex items-center justify-center cursor-pointer';
-          } else if (['2', '3'].includes(b.innerText.trim())) {
-            b.className = 'w-8 h-8 rounded-full bg-surface-container border border-outline-variant text-on-surface-variant hover:text-on-surface hover:border-primary transition-colors flex items-center justify-center cursor-pointer';
-          }
-        });
-      } else if (['2', '3'].includes(text)) {
-        paginationButtons.forEach(b => {
-          if (b.innerText.trim() === text) {
-            b.className = 'w-8 h-8 rounded-full bg-primary text-on-primary font-medium flex items-center justify-center cursor-pointer';
-          } else if (['1', '2', '3'].includes(b.innerText.trim())) {
-            b.className = 'w-8 h-8 rounded-full bg-surface-container border border-outline-variant text-on-surface-variant hover:text-on-surface hover:border-primary transition-colors flex items-center justify-center cursor-pointer';
-          }
-        });
-        showToast(`Beralih ke halaman ${text}`, 'info');
-      } else if (text.includes('Selanjutnya')) {
-        showToast('Halaman selanjutnya segera hadir', 'info');
-      }
-    });
   });
 }
