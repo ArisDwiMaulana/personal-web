@@ -289,7 +289,7 @@ function articleCard(tanggal, waktuBaca, judul, deskripsi, slug, tag) {
             >
               <a
                 class="focus:outline-none"
-                href="reading_article_clean_editorial_layout/"
+                href="/articles/${slug}/"
                 >${judul}</a
               >
             </h2>
@@ -308,7 +308,7 @@ function articleCard(tanggal, waktuBaca, judul, deskripsi, slug, tag) {
             <br>
             <a
               class="text-primary font-medium group-hover:underline inline-flex items-center gap-1"
-              href="articles/${slug}/"
+              href="/articles/${slug}/"
              >
               <span>Baca selengkapnya</span>
               <span

@@ -184,7 +184,7 @@ function articleCard(tanggal, judul, deskripsi, slug) {
               <h3
                 class="text-base sm:text-headline-sm text-on-surface group-hover:text-primary transition-colors font-medium"
               >
-                <a href="./articles/reading_article_clean_editorial_layout/"
+                <a href="/articles/${slug}/"
                   >${judul}</a
                 >
               </h3>
