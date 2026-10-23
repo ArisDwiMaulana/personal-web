@@ -1,4 +1,4 @@
-/// <reference path="../pb_data/types.d.ts" />
+/// <reference path="../data/types.d.ts" />
 migrate((app) => {
   const snapshot = [
     {
@@ -958,6 +958,18 @@ migrate((app) => {
           "required": false,
           "system": false,
           "type": "text"
+        },
+        {
+          "help": "",
+          "hidden": false,
+          "id": "date2862495610",
+          "max": "",
+          "min": "",
+          "name": "date",
+          "presentable": false,
+          "required": false,
+          "system": false,
+          "type": "date"
         }
       ],
       "id": "pbc_4287850865",
