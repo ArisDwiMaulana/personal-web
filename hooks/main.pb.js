@@ -52,10 +52,10 @@ routerAdd("GET", "/articles/{slug}/", (e) => {
     <link
       href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=JetBrains+Mono:wght@100..900&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
       rel="stylesheet"
-    />
+    />  
+    <script src="/js/reading.js" defer></script>
     <!-- CSS Tailwind yang sudah diproses -->
     <link rel="stylesheet" href="/output.css" />
-    <script src="/js/reading.js" defer></script>
   </head>
   <body class="bg-background text-on-surface p-6">
     ${renderHeader}
@@ -64,7 +64,7 @@ routerAdd("GET", "/articles/{slug}/", (e) => {
       ${renderArticleHeader}
 
       <!-- 3. Two-Column Reading Layout -->
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-star">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
         ${renderArticleContent}
         ${renderStickySidebar}
       </div>

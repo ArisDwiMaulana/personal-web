@@ -2,7 +2,7 @@ function article_header(tags, title, author, date, reading_time) {
   return `
       <!-- 2. Article Meta Header Section -->
       <header
-        class="mb-8 sm:mb-12 pb-6 sm:pb-8 border-b border-outline-variant/40"
+        class="mb-4 sm:mb-6 pb-3 sm:pb-4 border-b border-outline-variant/40"
       >
         <div class="flex flex-wrap items-center gap-2 mb-4">
           <span

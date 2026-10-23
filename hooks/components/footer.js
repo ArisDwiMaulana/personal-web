@@ -9,7 +9,7 @@ function footer() {
       >
         <!-- Copyright / PGP verification status -->
         <div class="text-on-surface-variant">
-          © 2025 adrian.sys // PGP: 4A7F 92B1 C08D E351 // All logs verified.
+          © 2025 Aris Dwi M. // PGP: 4A7F 92B1 C08D E351 // All logs verified.
         </div>
 
         <!-- Navigation links -->
