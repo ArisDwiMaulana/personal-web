@@ -1,4 +1,15 @@
-function sticky_sidebar() {
+function sticky_sidebar(items) {
+  let anchor = ``;
+  items.forEach((element, index) => {
+    anchor += `
+      <a
+        class="block py-1 text-on-surface-variant hover:text-primary transition-colors"
+        href="#${element.targetId}">
+        ${index + 1}. ${element.text}
+      </a>
+ 
+    `;
+  });
   return `
 <!-- Right Column: Sticky Sidebar (Spans 4 columns) -->
         <aside class="lg:col-span-4 space-y-6 w-full lg:sticky lg:top-20">
@@ -12,30 +23,7 @@ function sticky_sidebar() {
               Daftar Isi
             </h3>
             <nav class="space-y-1.5 text-xs sm:text-body-sm">
-              <a
-                class="block py-1 text-on-surface-variant hover:text-primary transition-colors"
-                href="#prerequisites"
-              >
-                1. Prasyarat &amp; Arsitektur
-              </a>
-              <a
-                class="block py-1 text-primary font-medium transition-colors"
-                href="#writing-playbook"
-              >
-                2. Menulis Playbook Ansible
-              </a>
-              <a
-                class="block py-1 text-on-surface-variant hover:text-primary transition-colors"
-                href="#audit-verification"
-              >
-                3. Audit &amp; Verifikasi Lynis
-              </a>
-              <a
-                class="block py-1 text-on-surface-variant hover:text-primary transition-colors"
-                href="#key-takeaways"
-              >
-                4. Poin Kunci &amp; Praktik Terbaik
-              </a>
+              ${anchor}
             </nav>
           </div>
 

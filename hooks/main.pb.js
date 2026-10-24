@@ -12,6 +12,7 @@ routerAdd("GET", "/articles/{slug}/", (e) => {
   const sticky_sidebar = require(`${__hooks}/components/sticky_sidebar.js`);
   const bottom_nav = require(`${__hooks}/components/bottom_nav.js`);
   const footer = require(`${__hooks}/components/footer.js`);
+  const parseH2AndSidebar = require(`${__hooks}/utils/parser.js`);
 
   try {
     // Cari artikel berdasarkan slug & status published
@@ -24,6 +25,7 @@ routerAdd("GET", "/articles/{slug}/", (e) => {
     const tags = article.get("tags");
     const date = article.get("date");
     const content = article.get("content");
+    const { cleanHtml, sidebarItems } = parseH2AndSidebar(content);
 
     const renderHeader = header();
     const renderBreadcrumb = breadcrumb(title);
@@ -34,8 +36,8 @@ routerAdd("GET", "/articles/{slug}/", (e) => {
       date,
       reading_time,
     );
-    const renderArticleContent = article_content(content);
-    const renderStickySidebar = sticky_sidebar();
+    const renderArticleContent = article_content(cleanHtml);
+    const renderStickySidebar = sticky_sidebar(sidebarItems);
     const renderBottomNav = bottom_nav();
     const renderFooter = footer();
 
@@ -59,7 +61,7 @@ routerAdd("GET", "/articles/{slug}/", (e) => {
   </head>
   <body class="bg-background text-on-surface p-6">
     ${renderHeader}
-    <main class="flex-grow max-w-7xl w-full mx-auto px-4 md:px-6 py-6 md:py-8">
+    <main class="grow max-w-7xl w-full mx-auto px-4 md:px-6 py-6 md:py-8">
       ${renderBreadcrumb}
       ${renderArticleHeader}
 
@@ -77,7 +79,6 @@ routerAdd("GET", "/articles/{slug}/", (e) => {
     return e.html(200, html);
   } catch (err) {
     console.log(err);
-    console.log(renderHeader());
     return e.html(
       404,
       `
