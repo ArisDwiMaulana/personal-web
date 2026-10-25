@@ -13,6 +13,7 @@ routerAdd("GET", "/articles/{slug}/", (e) => {
   const bottom_nav = require(`${__hooks}/components/bottom_nav.js`);
   const footer = require(`${__hooks}/components/footer.js`);
   const parseH2AndSidebar = require(`${__hooks}/utils/parser.js`);
+  const getNextPrevArticle = require(`${__hooks}/utils/getNextPrevArticle.js`);
 
   try {
     // Cari artikel berdasarkan slug & status published
@@ -26,6 +27,7 @@ routerAdd("GET", "/articles/{slug}/", (e) => {
     const date = article.get("date");
     const content = article.get("content");
     const { cleanHtml, sidebarItems } = parseH2AndSidebar(content);
+    const { prev, next } = getNextPrevArticle(article);
 
     const renderHeader = header();
     const renderBreadcrumb = breadcrumb(title);
@@ -38,7 +40,7 @@ routerAdd("GET", "/articles/{slug}/", (e) => {
     );
     const renderArticleContent = article_content(cleanHtml);
     const renderStickySidebar = sticky_sidebar(sidebarItems);
-    const renderBottomNav = bottom_nav();
+    const renderBottomNav = bottom_nav(prev, next);
     const renderFooter = footer();
 
     // Render template HTML langsung dari server

@@ -1,14 +1,8 @@
-function bottom_nav() {
+function linkPrev(prev) {
   return `
-    <!-- 4. Bottom Navigation & Discussion Section -->
-    <div
-        class="mt-12 sm:mt-16 pt-8 border-t border-outline-variant/40 space-y-8"
-      >
-        <!-- Navigasi Artikel -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
           <a
             class="p-4 sm:p-5 rounded bg-surface-container border border-outline-variant/40 hover:border-primary/50 transition-colors group flex flex-col justify-between"
-            href="../"
+            href="/articles/${prev.slug}/"
           >
             <span class="text-xs text-outline mb-1 font-mono"
               >← Artikel Sebelumnya</span
@@ -16,12 +10,18 @@ function bottom_nav() {
             <span
               class="text-sm sm:text-body-md font-medium text-on-surface group-hover:text-primary transition-colors"
             >
-              Understanding eBPF for Runtime Security
+              ${prev.title}
             </span>
           </a>
+
+  `;
+}
+
+function linkNext(next) {
+  return `
           <a
             class="p-4 sm:p-5 rounded bg-surface-container border border-outline-variant/40 hover:border-primary/50 transition-colors group flex flex-col justify-between md:text-right"
-            href="../"
+            href="/articles/${next.slug}/"
           >
             <span class="text-xs text-outline mb-1 font-mono"
               >Artikel Selanjutnya →</span
@@ -29,9 +29,34 @@ function bottom_nav() {
             <span
               class="text-sm sm:text-body-md font-medium text-on-surface group-hover:text-primary transition-colors"
             >
-              Deep Dive: Linux Kernel Exploitation
+              ${next.title}
             </span>
           </a>
+  `;
+}
+
+function bottom_nav(prevArticle, nextArticle) {
+  let anchorPrev = ``;
+  let anchorNext = ``;
+  if (prevArticle != null && nextArticle != null) {
+    anchorNext = linkNext(nextArticle);
+    anchorPrev = linkPrev(prevArticle);
+  } else if (prevArticle != null) {
+    anchorPrev = linkPrev(prevArticle);
+    anchorNext = "<div></div>";
+  } else if (nextArticle != null) {
+    anchorNext = linkNext(nextArticle);
+    anchorPrev = "<div></div>";
+  }
+  return `
+    <!-- 4. Bottom Navigation & Discussion Section -->
+      <div
+        class="mt-12 sm:mt-16 pt-8 border-t border-outline-variant/40 space-y-8"
+      >
+        <!-- Navigasi Artikel -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          ${anchorPrev}
+          ${anchorNext}
         </div>
 
         <!-- Diskusi & Feedback -->
@@ -59,7 +84,6 @@ function bottom_nav() {
           </div>
         </div>
       </div>
-    </main>
 
   `;
 }
