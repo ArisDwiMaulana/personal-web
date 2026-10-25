@@ -14,6 +14,7 @@ routerAdd("GET", "/articles/{slug}/", (e) => {
   const footer = require(`${__hooks}/components/footer.js`);
   const parseH2AndSidebar = require(`${__hooks}/utils/parser.js`);
   const getNextPrevArticle = require(`${__hooks}/utils/getNextPrevArticle.js`);
+  const getRelatedArticles = require(`${__hooks}/utils/getRelatedArticles.js`);
 
   try {
     // Cari artikel berdasarkan slug & status published
@@ -28,6 +29,7 @@ routerAdd("GET", "/articles/{slug}/", (e) => {
     const content = article.get("content");
     const { cleanHtml, sidebarItems } = parseH2AndSidebar(content);
     const { prev, next } = getNextPrevArticle(article);
+    const relatedArticles = getRelatedArticles(article);
 
     const renderHeader = header();
     const renderBreadcrumb = breadcrumb(title);
@@ -39,7 +41,7 @@ routerAdd("GET", "/articles/{slug}/", (e) => {
       reading_time,
     );
     const renderArticleContent = article_content(cleanHtml);
-    const renderStickySidebar = sticky_sidebar(sidebarItems);
+    const renderStickySidebar = sticky_sidebar(sidebarItems, relatedArticles);
     const renderBottomNav = bottom_nav(prev, next);
     const renderFooter = footer();
 

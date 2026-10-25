@@ -1,4 +1,4 @@
-function sticky_sidebar(items) {
+function sticky_sidebar(items, relatedArticles) {
   let anchor = ``;
   items.forEach((element, index) => {
     anchor += `
@@ -10,6 +10,29 @@ function sticky_sidebar(items) {
  
     `;
   });
+
+  let related = "";
+  if (relatedArticles.length == 0) {
+    related =
+      "<h4 class='text-on-surface-variant text-xs sm:text-body-sm text-center'>Belum ada artikel terkait</h4>";
+  } else {
+    relatedArticles.forEach((article) => {
+      related += `
+            <a class="block group py-1.5" href="/articles/${article.slug}">
+              <div
+                class="text-xs sm:text-body-sm text-on-surface group-hover:text-primary transition-colors font-medium mb-1"
+              >
+                ${article.title}
+              </div>
+              <div class="text-xs text-outline font-mono">
+                ${article.date.slice(0, 10)} · ${article.reading_time}
+              </div>
+            </a>
+            <div class="border-t border-outline-variant/20"></div>
+
+    `;
+    });
+  }
   return `
 <!-- Right Column: Sticky Sidebar (Spans 4 columns) -->
         <aside class="lg:col-span-4 space-y-6 w-full lg:sticky lg:top-20">
@@ -36,27 +59,7 @@ function sticky_sidebar(items) {
             >
               Artikel Terkait
             </h3>
-            <a class="block group py-1.5" href="../">
-              <div
-                class="text-xs sm:text-body-sm text-on-surface group-hover:text-primary transition-colors font-medium mb-1"
-              >
-                Practical Zero-Trust Architecture in Microk8s Clusters
-              </div>
-              <div class="text-xs text-outline font-mono">
-                12 Sep 2025 · 6 min read
-              </div>
-            </a>
-            <div class="border-t border-outline-variant/20"></div>
-            <a class="block group py-1.5" href="../">
-              <div
-                class="text-xs sm:text-body-sm text-on-surface group-hover:text-primary transition-colors font-medium mb-1"
-              >
-                Automated TLS Rotation with ACME &amp; Systemd
-              </div>
-              <div class="text-xs text-outline font-mono">
-                03 Agu 2025 · 5 min read
-              </div>
-            </a>
+            ${related}
           </div>
         </aside>
   `;
