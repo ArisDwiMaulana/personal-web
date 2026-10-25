@@ -1,20 +1,38 @@
+function tagOdd(item) {
+  return `
+          <span
+            class="px-2.5 py-1 rounded text-xs sm:text-body-sm bg-secondary/10 text-secondary border border-secondary/30 font-mono"
+          >
+            ${item}
+          </span>
+
+  `;
+}
+
+function tagEven(item) {
+  return `
+          <span
+            class="px-2.5 py-1 rounded text-xs sm:text-body-sm bg-surface-container text-on-surface-variant font-mono"
+          >
+            ${item}
+          </span>
+
+  `;
+}
+
 function article_header(tags, title, author, date, reading_time) {
+  const tagsArray = tags ? tags.trim().split(/\s+/) : [];
+  let tagsHtml = "";
+  tagsArray.forEach((tag, index) => {
+    tagsHtml += index % 2 == 0 ? tagOdd(tag) : tagEven(tag);
+  });
   return `
       <!-- 2. Article Meta Header Section -->
       <header
         class="mb-4 sm:mb-6 pb-3 sm:pb-4 border-b border-outline-variant/40"
       >
         <div class="flex flex-wrap items-center gap-2 mb-4">
-          <span
-            class="px-2.5 py-1 rounded text-xs sm:text-body-sm bg-secondary/10 text-secondary border border-secondary/30 font-mono"
-          >
-            ${tags}
-          </span>
-          <span
-            class="px-2.5 py-1 rounded text-xs sm:text-body-sm bg-surface-container text-on-surface-variant font-mono"
-          >
-            CIS Benchmark v2.0
-          </span>
+          ${tagsHtml}
         </div>
         <h1
           class="text-2xl sm:text-3xl md:text-headline-lg font-headline-lg text-on-surface mb-6 tracking-tight leading-tight md:text-[36px] font-semibold"
