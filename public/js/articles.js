@@ -1,10 +1,15 @@
 /**
  * Adrian | SecLog - Articles Page Controller (articles.js)
- * Standalone JavaScript for Halaman Artikel (articles/index.html)
- * Tailwind CSS + DaisyUI Standalone Implementation
  */
 
-// Immediate Theme Initialization (prevents FOUC on page load)
+// State terpusat untuk menangani pencarian, filter, dan pagination
+const state = {
+  page: 1,
+  perPage: 12, // Mengatur 6 artikel per halaman sesuai UI
+  category: "semua",
+  q: "",
+};
+
 (function initThemeEarly() {
   const savedTheme = localStorage.getItem("theme") || "dark";
   document.documentElement.setAttribute("data-theme", savedTheme);
@@ -17,19 +22,16 @@
 
 document.addEventListener("DOMContentLoaded", () => {
   initThemeController();
-  //initArticleFiltersAndSearch();
-  //initNewsletterForm();
-  initPagination();
+  renderDropDownItems();
+  fetchArticles(); // Memanggil data artikel utama
+  initSearch();
+  initFilterDropdown();
 });
 
-/**
- * DaisyUI Theme Controller & Storage Sync
- */
 function initThemeController() {
   const savedTheme = localStorage.getItem("theme") || "dark";
   const controllers = document.querySelectorAll(".theme-controller");
 
-  // Sync initial state of checkbox toggles
   controllers.forEach((toggle) => {
     if (toggle.value === "light") {
       toggle.checked = savedTheme === "light";
@@ -38,7 +40,6 @@ function initThemeController() {
     }
   });
 
-  // Global change listener for theme-controller checkbox
   document.addEventListener("change", (e) => {
     if (e.target && e.target.matches(".theme-controller")) {
       let newTheme = "dark";
@@ -68,7 +69,6 @@ function applyTheme(theme) {
   }
   localStorage.setItem("theme", theme);
 
-  // Sync all theme-controller toggles on page
   document.querySelectorAll(".theme-controller").forEach((toggle) => {
     if (toggle.value === "light") {
       toggle.checked = theme === "light";
@@ -78,9 +78,6 @@ function applyTheme(theme) {
   });
 }
 
-/**
- * Toast Notification Helper (DaisyUI compatible)
- */
 function showToast(message, type = "success") {
   let toastContainer = document.getElementById("seclog-toast-container");
   if (!toastContainer) {
@@ -107,12 +104,10 @@ function showToast(message, type = "success") {
 
   toastContainer.appendChild(alert);
 
-  // Animate in
   requestAnimationFrame(() => {
     alert.classList.remove("translate-y-[-10px]", "opacity-0");
   });
 
-  // Remove after 2.5s
   setTimeout(() => {
     alert.classList.add("opacity-0", "translate-y-[-10px]");
     setTimeout(() => alert.remove(), 300);
@@ -120,156 +115,35 @@ function showToast(message, type = "success") {
 }
 
 /**
- * Combined Article Filter & Search Controller
+ * Fetch Data Terpusat dari PocketBase
  */
-// function initArticleFiltersAndSearch() {
-//   const searchInput = document.querySelector('input[data-article-search]');
-//   const filterButtons = document.querySelectorAll('button[data-filter]');
-//   const articlesContainer = document.getElementById('articles-container');
-//   const articles = articlesContainer ? articlesContainer.querySelectorAll('article[data-category]') : [];
-//   const countLabel = document.querySelector('.border-t span.font-mono');
-//
-//   if (!articles.length) return;
-//
-//   let activeCategory = 'all';
-//   let searchQuery = '';
-//
-//   // Empty state container element
-//   let emptyState = document.getElementById('articles-empty-state');
-//   if (!emptyState && articlesContainer) {
-//     emptyState = document.createElement('div');
-//     emptyState.id = 'articles-empty-state';
-//     emptyState.className = 'col-span-1 md:col-span-2 lg:col-span-3 p-8 rounded-xl bg-surface-container border border-outline-variant text-center space-y-3 hidden';
-//     emptyState.innerHTML = `
-//       <div class="inline-flex items-center justify-center w-12 h-12 rounded-full bg-surface-container-high text-outline">
-//         <span class="material-symbols-outlined text-2xl">search_off</span>
-//       </div>
-//       <p class="text-on-surface font-medium text-sm">Tidak ditemukan artikel yang sesuai</p>
-//       <p class="text-on-surface-variant text-xs font-mono">Coba ubah kata kunci pencarian atau pilih kategori lain.</p>
-//     `;
-//     articlesContainer.appendChild(emptyState);
-//   }
-//
-//   function filterArticles() {
-//     let visibleCount = 0;
-//     const totalCount = articles.length;
-//
-//     articles.forEach((art) => {
-//       const categoryData = (art.getAttribute('data-category') || '').toLowerCase();
-//       const contentText = art.innerText.toLowerCase();
-//
-//       const matchesCategory = (activeCategory === 'all') || categoryData.includes(activeCategory.toLowerCase());
-//       const matchesSearch = !searchQuery || contentText.includes(searchQuery);
-//
-//       if (matchesCategory && matchesSearch) {
-//         art.classList.remove('hidden');
-//         visibleCount++;
-//       } else {
-//         art.classList.add('hidden');
-//       }
-//     });
-//
-//     // Update empty state
-//     if (emptyState) {
-//       if (visibleCount === 0) {
-//         emptyState.classList.remove('hidden');
-//       } else {
-//         emptyState.classList.add('hidden');
-//       }
-//     }
-//
-//     // Update counter label if present
-//     if (countLabel) {
-//       countLabel.textContent = `Menampilkan ${visibleCount} dari ${totalCount} artikel`;
-//     }
-//   }
-//
-//   // Filter buttons listener
-//   filterButtons.forEach((btn) => {
-//     btn.addEventListener('click', () => {
-//       activeCategory = btn.getAttribute('data-filter') || 'all';
-//
-//       // Update button styling
-//       filterButtons.forEach((b) => {
-//         b.classList.remove('bg-primary', 'text-on-primary');
-//         b.classList.add('bg-surface-container', 'border', 'border-outline-variant', 'text-on-surface-variant');
-//       });
-//       btn.classList.add('bg-primary', 'text-on-primary');
-//       btn.classList.remove('bg-surface-container', 'border-outline-variant', 'text-on-surface-variant');
-//
-//       filterArticles();
-//     });
-//   });
-//
-//   // Search input listener
-//   if (searchInput) {
-//     searchInput.addEventListener('input', (e) => {
-//       searchQuery = e.target.value.toLowerCase().trim();
-//       filterArticles();
-//     });
-//   }
-// }
+function fetchArticles() {
+  let filters = [];
 
-/**
- * Newsletter Form Handler
- */
-// function initNewsletterForm() {
-//   const form = document.querySelector('#feed form');
-//   if (!form) return;
-//
-//   // Remove inline onsubmit if present
-//   form.removeAttribute('onsubmit');
-//
-//   form.addEventListener('submit', (e) => {
-//     e.preventDefault();
-//     const emailInput = form.querySelector('input[type="email"]');
-//     if (!emailInput?.value) return;
-//
-//     showToast(`Terima kasih! Email ${emailInput.value} telah terdaftar untuk berlangganan pembaruan artikel.`, 'success');
-//     form.reset();
-//   });
-// }
+  if (state.category && state.category !== "semua") {
+    filters.push(`tags ~ "${state.category}"`);
+  }
 
-/**
- * Pagination Click Interactivity
- */
-function initPagination() {
-  const paginationButtons = document.querySelectorAll(".border-t .flex button");
-  if (!paginationButtons.length) return;
+  if (state.q) {
+    filters.push(
+      `(title ~ "${state.q}" || summary ~ "${state.q}" || tags ~ "${state.q}")`,
+    );
+  }
 
-  paginationButtons.forEach((btn) => {
-    btn.addEventListener("click", () => {
-      const text = btn.innerText.trim();
-      if (text === "1") {
-        // Page 1 is active
-        paginationButtons.forEach((b) => {
-          if (b.innerText.trim() === "1") {
-            b.className =
-              "w-8 h-8 rounded-full bg-primary text-on-primary font-medium flex items-center justify-center cursor-pointer";
-          } else if (["2", "3"].includes(b.innerText.trim())) {
-            b.className =
-              "w-8 h-8 rounded-full bg-surface-container border border-outline-variant text-on-surface-variant hover:text-on-surface hover:border-primary transition-colors flex items-center justify-center cursor-pointer";
-          }
-        });
-      } else if (["2", "3"].includes(text)) {
-        paginationButtons.forEach((b) => {
-          if (b.innerText.trim() === text) {
-            b.className =
-              "w-8 h-8 rounded-full bg-primary text-on-primary font-medium flex items-center justify-center cursor-pointer";
-          } else if (["1", "2", "3"].includes(b.innerText.trim())) {
-            b.className =
-              "w-8 h-8 rounded-full bg-surface-container border border-outline-variant text-on-surface-variant hover:text-on-surface hover:border-primary transition-colors flex items-center justify-center cursor-pointer";
-          }
-        });
-        showToast(`Beralih ke halaman ${text}`, "info");
-      } else if (text.includes("Selanjutnya")) {
-        showToast("Halaman selanjutnya segera hadir", "info");
-      }
-    });
-  });
+  let queryParams = `page=${state.page}&perPage=${state.perPage}&sort=-date`;
+  if (filters.length > 0) {
+    queryParams += `&filter=${encodeURIComponent(filters.join(" && "))}`;
+  }
+
+  fetch(`/api/collections/articles/records?${queryParams}`)
+    .then((response) => response.json())
+    .then((data) => {
+      renderCards(data.items);
+      renderPagination(data);
+    })
+    .catch((err) => console.error("Gagal mengambil data artikel:", err));
 }
 
-// article card
 function articleCard(tanggal, waktuBaca, judul, deskripsi, slug, tag) {
   return `
         <article
@@ -321,27 +195,165 @@ function articleCard(tanggal, waktuBaca, judul, deskripsi, slug, tag) {
   `;
 }
 
-// fetch all articles
-fetch("/api/collections/articles/records")
-  .then((response) => response.json())
-  .then((data) => {
-    const articles = data.items;
-    const newestArticles = articles.sort((a, b) =>
-      b.date.localeCompare(a.date),
-    );
-    const card_body = document.getElementById("articles-container");
-    let articleCards = "";
+function renderCards(items) {
+  const card_body = document.getElementById("articles-container");
+  if (!items || items.length === 0) {
+    card_body.innerHTML = `<p class="col-span-full text-center text-on-surface-variant font-mono py-12">Tidak ada artikel yang ditemukan.</p>`;
+    return;
+  }
 
-    newestArticles.forEach((items) => {
-      articleCards += articleCard(
-        items.date.slice(0, 10),
-        items.reading_time,
-        items.title,
-        items.summary,
-        items.slug,
-        items.tags,
-      );
+  let articleCards = "";
+  items.forEach((item) => {
+    articleCards += articleCard(
+      item.date.slice(0, 10),
+      item.reading_time,
+      item.title,
+      item.summary,
+      item.slug,
+      item.tags,
+    );
+  });
+  card_body.innerHTML = articleCards;
+}
+
+function renderDropDownItems() {
+  const selectTag = document.getElementById("filter-input");
+  if (!selectTag) {
+    return;
+  }
+
+  fetch("/api/collections/articles/records?fields=tags")
+    .then((res) => res.json())
+    .then((data) => {
+      // 1. Ambil semua tag dari artikel dan gabungkan
+      const allTags = data.items
+        .flatMap((item) => (item.tags ? item.tags.trim().split(/\s+/) : []))
+        .filter((tag) => tag.length > 0);
+
+      // 2. Ambil hanya tag yang unik (hapus duplikat)
+      const uniqueTags = [...new Set(allTags)].sort();
+
+      // 3. Masukkan ke dalam dropdown
+      let optionsHtml = `<option selected value="semua">Semua</option>`;
+      uniqueTags.forEach((tag) => {
+        optionsHtml += `<option value="${tag}">${tag}</option>`;
+      });
+
+      selectTag.innerHTML = optionsHtml;
+    })
+    .catch((err) => console.error("Gagal memuat tag:", err));
+}
+
+/**
+ * Logika Render Pagination Dinamis
+ */
+function renderPagination(data) {
+  const paginationContainer = document.getElementById("pagination-container");
+  const paginationInfo = document.querySelector(
+    ".border-t span.text-on-surface-variant",
+  );
+  if (!paginationContainer) return;
+
+  const { page, totalPages, totalItems, perPage } = data;
+
+  // Update statistik teks "Menampilkan X - Y dari Z artikel"
+  if (paginationInfo) {
+    const startItem = totalItems > 0 ? (page - 1) * perPage + 1 : 0;
+    const endItem = Math.min(page * perPage, totalItems);
+    paginationInfo.textContent = `Menampilkan ${startItem} - ${endItem} dari ${totalItems} artikel`;
+  }
+
+  if (totalPages <= 1) {
+    paginationContainer.innerHTML = "";
+    return;
+  }
+
+  let buttonsHtml = "";
+
+  // Tombol Sebelumnya
+  if (page > 1) {
+    buttonsHtml += `
+      <button data-page="${page - 1}" class="px-3 h-8 rounded-full bg-surface-container border border-outline-variant text-on-surface-variant hover:text-on-surface hover:border-primary transition-colors flex items-center gap-1 cursor-pointer">
+        <span class="material-symbols-outlined text-xs">arrow_back</span>
+        <span>Sebelumnya</span>
+      </button>
+    `;
+  }
+
+  // Tombol Angka Halaman
+  for (let i = 1; i <= totalPages; i++) {
+    const isActive = i === page;
+    const activeClass = isActive
+      ? "bg-primary text-on-primary font-medium"
+      : "bg-surface-container border border-outline-variant text-on-surface-variant hover:text-on-surface hover:border-primary transition-colors";
+
+    buttonsHtml += `
+      <button data-page="${i}" class="w-8 h-8 rounded-full ${activeClass} flex items-center justify-center cursor-pointer">
+        ${i}
+      </button>
+    `;
+  }
+
+  // Tombol Selanjutnya
+  if (page < totalPages) {
+    buttonsHtml += `
+      <button data-page="${page + 1}" class="px-3 h-8 rounded-full bg-surface-container border border-outline-variant text-on-surface-variant hover:text-on-surface hover:border-primary transition-colors flex items-center gap-1 cursor-pointer">
+        <span>Selanjutnya</span>
+        <span class="material-symbols-outlined text-xs">arrow_forward</span>
+      </button>
+    `;
+  }
+
+  paginationContainer.innerHTML = buttonsHtml;
+
+  // Listener Klik Tombol Pagination
+  paginationContainer.querySelectorAll("button[data-page]").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const targetPage = parseInt(btn.getAttribute("data-page"));
+      if (targetPage && targetPage !== state.page) {
+        state.page = targetPage;
+        fetchArticles();
+        showToast(`Beralih ke halaman ${targetPage}`, "info");
+        document
+          .getElementById("articles-container")
+          ?.scrollIntoView({ behavior: "smooth" });
+      }
     });
-    card_body.innerHTML = articleCards;
-  })
-  .catch((err) => console.log(err));
+  });
+}
+
+/**
+ * Filter & Event Listeners
+ */
+function debounce(fn, delay = 300) {
+  let timeout;
+  return (...args) => {
+    clearTimeout(timeout);
+    timeout = setTimeout(() => fn(...args), delay);
+  };
+}
+
+function initSearch() {
+  const searchInput = document.getElementById("search-input");
+  if (!searchInput) return;
+
+  searchInput.addEventListener(
+    "input",
+    debounce((e) => {
+      state.q = e.target.value.trim();
+      state.page = 1; // Reset ke halaman pertama saat melakukan pencarian baru
+      fetchArticles();
+    }, 300),
+  );
+}
+
+function initFilterDropdown() {
+  const selectTag = document.getElementById("filter-input");
+  if (!selectTag) return;
+
+  selectTag.addEventListener("change", (e) => {
+    state.category = e.target.value;
+    state.page = 1; // Reset ke halaman pertama saat ganti kategori
+    fetchArticles();
+  });
+}

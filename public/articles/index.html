@@ -124,37 +124,14 @@
               class="w-full bg-surface-container border border-outline-variant rounded-full pl-10 pr-4 py-2 text-sm text-on-surface placeholder:text-outline focus:outline-none focus:border-primary transition-colors"
               data-article-search
               placeholder="Cari artikel atau topik..."
+              id="search-input"
               type="text"
             />
           </div>
-          <div
-            class="flex items-center gap-2 overflow-x-auto w-full md:w-auto pb-2 scrollbar-none"
-          >
-            <button
-              class="px-4 py-1.5 rounded-full text-xs font-medium bg-primary text-on-primary transition-colors whitespace-nowrap cursor-pointer shrink-0"
-              data-filter="all"
-            >
-              Semua
-            </button>
-            <button
-              class="px-4 py-1.5 rounded-full text-xs font-medium bg-surface-container border border-outline-variant text-on-surface-variant hover:text-on-surface hover:border-primary transition-colors whitespace-nowrap cursor-pointer shrink-0"
-              data-filter="linux"
-            >
-              Linux
-            </button>
-            <button
-              class="px-4 py-1.5 rounded-full text-xs font-medium bg-surface-container border border-outline-variant text-on-surface-variant hover:text-on-surface hover:border-primary transition-colors whitespace-nowrap cursor-pointer shrink-0"
-              data-filter="cybersecurity"
-            >
-              Cybersecurity
-            </button>
-            <button
-              class="px-4 py-1.5 rounded-full text-xs font-medium bg-surface-container border border-outline-variant text-on-surface-variant hover:text-on-surface hover:border-primary transition-colors whitespace-nowrap cursor-pointer shrink-0"
-              data-filter="networking"
-            >
-              Lab &amp; Jaringan
-            </button>
-          </div>
+          <select
+            id="filter-input"
+            class="select select-md bg-surface-container"
+          ></select>
         </div>
       </section>
 
@@ -172,31 +149,10 @@
           <span class="text-xs text-on-surface-variant font-mono"
             >Menampilkan 1 - 6 dari 24 artikel</span
           >
-          <div class="flex items-center gap-2 text-xs font-mono">
-            <button
-              class="w-8 h-8 rounded-full bg-primary text-on-primary font-medium flex items-center justify-center cursor-pointer"
-            >
-              1
-            </button>
-            <button
-              class="w-8 h-8 rounded-full bg-surface-container border border-outline-variant text-on-surface-variant hover:text-on-surface hover:border-primary transition-colors flex items-center justify-center cursor-pointer"
-            >
-              2
-            </button>
-            <button
-              class="w-8 h-8 rounded-full bg-surface-container border border-outline-variant text-on-surface-variant hover:text-on-surface hover:border-primary transition-colors flex items-center justify-center cursor-pointer"
-            >
-              3
-            </button>
-            <button
-              class="px-3 h-8 rounded-full bg-surface-container border border-outline-variant text-on-surface-variant hover:text-on-surface hover:border-primary transition-colors flex items-center gap-1 cursor-pointer"
-            >
-              <span>Selanjutnya</span>
-              <span class="material-symbols-outlined text-xs"
-                >arrow_forward</span
-              >
-            </button>
-          </div>
+          <div
+            class="flex items-center gap-2 text-xs font-mono"
+            id="pagination-container"
+          ></div>
         </div>
       </section>
     </main>
