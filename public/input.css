@@ -60,7 +60,8 @@
   --color-on-error: var(--color-on-error);
   --color-on-error-container: var(--color-on-error-container);
 
-  --font-geist: "Geist", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-geist:
+    "Geist", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   --font-jetbrains: "JetBrains Mono", monospace;
 
   --font-body-lg: var(--font-geist);
@@ -121,67 +122,69 @@
 }
 
 /* ====================================================
-   Obsidian Protocol Theme System (Dark Theme as Default)
-   Sourced from DESIGN.md
+   Bespoke Charcoal & Amber Theme System (Dark Default)
    ==================================================== */
 :root,
 [data-theme="dark"],
 .dark {
   color-scheme: dark;
 
-  /* Obsidian dark surfaces from DESIGN.md */
-  --color-surface: #0f131c;
-  --color-surface-dim: #0f131c;
-  --color-surface-bright: #353943;
-  --color-surface-container-lowest: #0a0e17;
-  --color-surface-container-low: #181b25;
-  --color-surface-container: #1c1f29;
-  --color-surface-container-high: #262a34;
-  --color-surface-container-highest: #31353f;
-  --color-surface-variant: #31353f;
-  --color-background: #0f131c;
+  /* True Charcoal / Zinc dark surfaces */
+  --color-surface: #111113;
+  --color-surface-dim: #111113;
+  --color-surface-bright: #34343a;
+  --color-surface-container-lowest: #09090b;
+  --color-surface-container-low: #18181b;
+  --color-surface-container: #202024;
+  --color-surface-container-high: #27272a;
+  --color-surface-container-highest: #323238;
+  --color-surface-variant: #323238;
+  --color-background: #111113;
 
-  /* Typography / Text from DESIGN.md */
-  --color-on-background: #dfe2ef;
-  --color-on-surface: #dfe2ef;
-  --color-on-surface-variant: #bbcabf;
-  --color-inverse-surface: #dfe2ef;
-  --color-inverse-on-surface: #2c303a;
+  /* Neutral High-Contrast Typography */
+  --color-on-background: #e4e4e7;
+  --color-on-surface: #e4e4e7;
+  --color-on-surface-variant: #a1a1aa;
+  --color-inverse-surface: #e4e4e7;
+  --color-inverse-on-surface: #27272a;
 
-  /* Outlines & Borders from DESIGN.md */
-  --color-outline: #86948a;
-  --color-outline-variant: #3c4a42;
+  /* Clean Neutral Outlines & Borders */
+  --color-outline: #71717a;
+  --color-outline-variant: #27272a;
 
-  /* Accents from DESIGN.md */
-  --color-primary: #4edea3;
-  --color-primary-container: #10b981;
-  --color-primary-fixed: #6ffbbe;
-  --color-primary-fixed-dim: #4edea3;
-  --color-on-primary: #003824;
-  --color-on-primary-container: #00422b;
-  --color-on-primary-fixed: #002113;
-  --color-on-primary-fixed-variant: #005236;
-  --color-inverse-primary: #006c49;
-  --color-surface-tint: #4edea3;
+  /* Primary: Warm Amber */
+  --color-primary: #f0a533;
+  --color-primary-container: #b45309;
+  --color-primary-fixed: #fde68a;
+  --color-primary-fixed-dim: #f0a533;
+  --color-on-primary: #1a1102;
+  --color-on-primary-container: #fef3c7;
+  --color-on-primary-fixed: #1a1102;
+  --color-on-primary-fixed-variant: #78350f;
+  --color-inverse-primary: #b45309;
+  --color-surface-tint: #f0a533;
 
-  --color-secondary: #4cd7f6;
-  --color-secondary-container: #03b5d3;
-  --color-secondary-fixed: #acedff;
-  --color-secondary-fixed-dim: #4cd7f6;
-  --color-on-secondary: #003640;
-  --color-on-secondary-container: #00424e;
-  --color-on-secondary-fixed: #001f26;
-  --color-on-secondary-fixed-variant: #004e5c;
+  /* Secondary: Muted Steel Slate */
+  --color-secondary: #8ea4be;
+  --color-secondary-container: #334155;
+  --color-secondary-fixed: #cbd5e1;
+  --color-secondary-fixed-dim: #8ea4be;
+  --color-on-secondary: #0f172a;
+  --color-on-secondary-container: #f1f5f9;
+  --color-on-secondary-fixed: #0f172a;
+  --color-on-secondary-fixed-variant: #334155;
 
-  --color-tertiary: #c0c1ff;
-  --color-tertiary-container: #9699ff;
-  --color-tertiary-fixed: #e1e0ff;
-  --color-tertiary-fixed-dim: #c0c1ff;
-  --color-on-tertiary: #1000a9;
-  --color-on-tertiary-container: #1d17b2;
-  --color-on-tertiary-fixed: #07006c;
-  --color-on-tertiary-fixed-variant: #2f2ebe;
+  /* Tertiary: Soft Terracotta */
+  --color-tertiary: #e07a5f;
+  --color-tertiary-container: #9a3412;
+  --color-tertiary-fixed: #fed7aa;
+  --color-tertiary-fixed-dim: #e07a5f;
+  --color-on-tertiary: #1f0a05;
+  --color-on-tertiary-container: #ffedd5;
+  --color-on-tertiary-fixed: #1f0a05;
+  --color-on-tertiary-fixed-variant: #7c2d12;
 
+  /* Error */
   --color-error: #ffb4ab;
   --color-error-container: #93000a;
   --color-on-error: #690005;
@@ -198,86 +201,86 @@
   --noise: 0;
 
   /* DaisyUI Semantic Variables (Dark) */
-  --color-base-100: #0f131c;
-  --color-base-200: #181b25;
-  --color-base-300: #1c1f29;
-  --color-base-content: #dfe2ef;
-  --color-primary-content: #003824;
-  --color-secondary-content: #003640;
-  --color-accent: #4edea3;
-  --color-accent-content: #003824;
-  --color-neutral: #1c1f29;
-  --color-neutral-content: #dfe2ef;
-  --color-info: #4cd7f6;
-  --color-info-content: #003640;
-  --color-success: #4edea3;
-  --color-success-content: #003824;
+  --color-base-100: #111113;
+  --color-base-200: #18181b;
+  --color-base-300: #202024;
+  --color-base-content: #e4e4e7;
+  --color-primary-content: #1a1102;
+  --color-secondary-content: #0f172a;
+  --color-accent: #f0a533;
+  --color-accent-content: #1a1102;
+  --color-neutral: #202024;
+  --color-neutral-content: #e4e4e7;
+  --color-info: #7dd3fc;
+  --color-info-content: #082f49;
+  --color-success: #52b788;
+  --color-success-content: #052e16;
   --color-warning: #f59e0b;
   --color-warning-content: #451a03;
   --color-error-content: #690005;
 }
 
 /* ====================================================
-   Light Theme (Compliant with DaisyUI & DESIGN.md)
+   Light Theme — Warm Paper, Burnt Copper & Deep Steel
    ==================================================== */
 [data-theme="light"],
 :root:has(input.theme-controller[value="light"]:checked) {
   color-scheme: light;
 
-  /* Clean light surfaces */
+  /* Warm Paper & Stone light surfaces */
   --color-surface: #ffffff;
-  --color-surface-dim: #f1f5f9;
+  --color-surface-dim: #f5f5f4;
   --color-surface-bright: #ffffff;
   --color-surface-container-lowest: #ffffff;
-  --color-surface-container-low: #f8fafc;
-  --color-surface-container: #f1f5f9;
-  --color-surface-container-high: #e2e8f0;
-  --color-surface-container-highest: #cbd5e1;
-  --color-surface-variant: #f1f5f9;
-  --color-background: #f8fafc;
+  --color-surface-container-low: #f5f5f4;
+  --color-surface-container: #e7e5e4;
+  --color-surface-container-high: #d6d3d1;
+  --color-surface-container-highest: #c7c3bf;
+  --color-surface-variant: #f5f5f4;
+  --color-background: #fafaf9;
 
   /* High-contrast readable typography */
-  --color-on-background: #0f172a;
-  --color-on-surface: #0f172a;
-  --color-on-surface-variant: #475569;
-  --color-inverse-surface: #0f131c;
-  --color-inverse-on-surface: #dfe2ef;
+  --color-on-background: #18181b;
+  --color-on-surface: #18181b;
+  --color-on-surface-variant: #52525b;
+  --color-inverse-surface: #111113;
+  --color-inverse-on-surface: #e4e4e7;
 
   /* Outlines & Borders */
-  --color-outline: #94a3b8;
-  --color-outline-variant: #e2e8f0;
+  --color-outline: #a1a1aa;
+  --color-outline-variant: #e4e4e7;
 
-  /* Primary Emerald tuned for light mode contrast */
-  --color-primary: #059669;
-  --color-primary-container: #10b981;
-  --color-primary-fixed: #047857;
-  --color-primary-fixed-dim: #059669;
+  /* Primary: Burnt Copper tuned for light mode contrast */
+  --color-primary: #b45309;
+  --color-primary-container: #d97706;
+  --color-primary-fixed: #92400e;
+  --color-primary-fixed-dim: #b45309;
   --color-on-primary: #ffffff;
   --color-on-primary-container: #ffffff;
   --color-on-primary-fixed: #ffffff;
-  --color-on-primary-fixed-variant: #064e3b;
-  --color-inverse-primary: #4edea3;
-  --color-surface-tint: #059669;
+  --color-on-primary-fixed-variant: #78350f;
+  --color-inverse-primary: #f0a533;
+  --color-surface-tint: #b45309;
 
-  /* Secondary Cyan tuned for light mode contrast */
-  --color-secondary: #0284c7;
-  --color-secondary-container: #0369a1;
-  --color-secondary-fixed: #0284c7;
-  --color-secondary-fixed-dim: #0369a1;
+  /* Secondary: Deep Steel tuned for light mode contrast */
+  --color-secondary: #3b556e;
+  --color-secondary-container: #293d52;
+  --color-secondary-fixed: #3b556e;
+  --color-secondary-fixed-dim: #293d52;
   --color-on-secondary: #ffffff;
   --color-on-secondary-container: #ffffff;
-  --color-on-secondary-fixed: #082f49;
-  --color-on-secondary-fixed-variant: #0c4a6e;
+  --color-on-secondary-fixed: #0f172a;
+  --color-on-secondary-fixed-variant: #1e293b;
 
-  /* Tertiary Indigo tuned for light mode contrast */
-  --color-tertiary: #4f46e5;
-  --color-tertiary-container: #4338ca;
-  --color-tertiary-fixed: #4f46e5;
-  --color-tertiary-fixed-dim: #4338ca;
+  /* Tertiary: Rust tuned for light mode contrast */
+  --color-tertiary: #9a3412;
+  --color-tertiary-container: #c2410c;
+  --color-tertiary-fixed: #9a3412;
+  --color-tertiary-fixed-dim: #c2410c;
   --color-on-tertiary: #ffffff;
   --color-on-tertiary-container: #ffffff;
-  --color-on-tertiary-fixed: #1e1b4b;
-  --color-on-tertiary-fixed-variant: #312e81;
+  --color-on-tertiary-fixed: #431407;
+  --color-on-tertiary-fixed-variant: #7c2d12;
 
   /* Error */
   --color-error: #dc2626;
@@ -297,18 +300,18 @@
 
   /* DaisyUI Semantic Variables (Light) */
   --color-base-100: #ffffff;
-  --color-base-200: #f8fafc;
-  --color-base-300: #f1f5f9;
-  --color-base-content: #0f172a;
+  --color-base-200: #fafaf9;
+  --color-base-300: #f5f5f4;
+  --color-base-content: #18181b;
   --color-primary-content: #ffffff;
   --color-secondary-content: #ffffff;
-  --color-accent: #059669;
+  --color-accent: #b45309;
   --color-accent-content: #ffffff;
-  --color-neutral: #f1f5f9;
-  --color-neutral-content: #0f172a;
-  --color-info: #0284c7;
+  --color-neutral: #f5f5f4;
+  --color-neutral-content: #18181b;
+  --color-info: #0369a1;
   --color-info-content: #ffffff;
-  --color-success: #059669;
+  --color-success: #2f855a;
   --color-success-content: #ffffff;
   --color-warning: #d97706;
   --color-warning-content: #ffffff;
@@ -351,4 +354,174 @@
 
 .full-width {
   width: 100%;
+}
+
+/* ====================================================
+   Rich Text Formatting Utility (.prose)
+   Integrated with Bespoke Charcoal & Amber Tokens
+   ==================================================== */
+.prose {
+  color: var(--color-on-background);
+  font-family: var(--font-geist);
+  font-size: var(--text-body-lg);
+  line-height: var(--text-body-lg--line-height);
+}
+
+/* --- Headings --- */
+.prose h1 {
+  color: var(--color-on-surface);
+  font-size: var(--text-display-hero-mobile);
+  font-weight: var(--text-display-hero-mobile--font-weight);
+  line-height: var(--text-display-hero-mobile--line-height);
+  letter-spacing: var(--text-display-hero-mobile--letter-spacing);
+  margin-top: 0;
+  margin-bottom: 2rem;
+}
+
+@media (min-width: 1024px) {
+  .prose h1 {
+    font-size: var(--text-display-hero);
+    font-weight: var(--text-display-hero--font-weight);
+    line-height: var(--text-display-hero--line-height);
+    letter-spacing: var(--text-display-hero--letter-spacing);
+  }
+}
+
+.prose h2 {
+  color: var(--color-on-surface);
+  font-size: var(--text-headline-lg-mobile);
+  font-weight: var(--text-headline-lg-mobile--font-weight);
+  line-height: var(--text-headline-lg-mobile--line-height);
+  letter-spacing: var(--text-headline-lg-mobile--letter-spacing);
+  margin-top: 1.5rem;
+  margin-bottom: 1rem;
+  border-bottom: 1px solid var(--color-outline-variant);
+  padding-bottom: 0.5rem;
+}
+
+@media (min-width: 1024px) {
+  .prose h2 {
+    font-size: var(--text-headline-lg);
+    font-weight: var(--text-headline-lg--font-weight);
+    line-height: var(--text-headline-lg--line-height);
+    letter-spacing: var(--text-headline-lg--letter-spacing);
+  }
+}
+
+.prose h3 {
+  color: var(--color-on-surface);
+  font-size: var(--text-headline-md);
+  font-weight: var(--text-headline-md--font-weight);
+  line-height: var(--text-headline-md--line-height);
+  letter-spacing: var(--text-headline-md--letter-spacing);
+  margin-top: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.prose h4 {
+  color: var(--color-on-surface);
+  font-size: var(--text-headline-sm);
+  font-weight: var(--text-headline-sm--font-weight);
+  line-height: var(--text-headline-sm--line-height);
+  letter-spacing: var(--text-headline-sm--letter-spacing);
+  margin-top: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+/* --- Paragraphs & Typography Cadence --- */
+.prose p {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+.prose strong,
+.prose b {
+  font-weight: 600;
+  color: var(--color-on-surface);
+}
+.prose em,
+.prose i {
+  font-style: italic;
+}
+
+/* --- Inline Codes --- */
+.prose code {
+  font-family: var(--font-code-inline);
+  font-size: var(--text-code-inline);
+  line-height: var(--text-code-inline--line-height);
+  background-color: var(--color-surface-container);
+  color: var(--color-tertiary);
+  padding: 0.2rem 0.4rem;
+  border-radius: 0.25rem;
+  border: 1px solid var(--color-outline-variant);
+}
+
+/* --- Code Blocks / Terminal Consoles --- */
+.prose pre {
+  background-color: var(--color-surface-container);
+  border: 1px solid var(--color-outline-variant);
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+  overflow-x: auto;
+}
+
+.prose pre code {
+  color: var(--color-on-surface);
+  font-family: var(--font-code-block);
+  font-size: var(--text-code-block);
+  line-height: var(--text-code-block--line-height);
+  background-color: transparent;
+  padding: 0;
+  border: none;
+  border-radius: 0;
+}
+
+/* --- Links & Accents --- */
+.prose a {
+  color: var(--color-primary);
+  text-decoration: none;
+  font-weight: 500;
+  border-bottom: 1px dashed var(--color-primary);
+  transition:
+    color 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.prose a:hover {
+  color: var(--color-secondary);
+  border-bottom-style: solid;
+  border-bottom-color: var(--color-secondary);
+}
+
+/* --- Lists --- */
+.prose ul {
+  list-style-type: disc;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  padding-left: 1.5rem;
+}
+
+.prose ol {
+  list-style-type: decimal;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  padding-left: 1.5rem;
+}
+
+.prose li {
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+/* --- Blockquotes (Tonal Stacking) --- */
+.prose blockquote {
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+  padding: 0.5rem 1rem 0.5rem 1.5rem;
+  border-left: 4px solid var(--color-tertiary);
+  color: var(--color-on-surface-variant);
+  font-style: italic;
+  background-color: var(--color-surface-container-low);
+  border-radius: 0 0.5rem 0.5rem 0;
 }
