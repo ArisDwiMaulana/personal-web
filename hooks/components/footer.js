@@ -1,46 +1,30 @@
 function footer() {
   return `
-<!-- ================= FOOTER (Shared Component) ================= -->
+<!-- Footer (Shared Component) -->
     <footer
-      class="bg-surface-container-lowest border-t border-outline-variant mt-12 sm:mt-16 transition-colors duration-200"
+      class="w-full bg-surface-container-lowest border-t border-outline-variant mt-12 sm:mt-16 transition-colors duration-200"
     >
       <div
-        class="flex flex-col md:flex-row justify-between items-center w-full px-4 sm:px-6 py-6 max-w-7xl mx-auto gap-4 text-xs font-mono text-center md:text-left"
+        class="flex flex-col sm:flex-row justify-between items-center w-full px-4 sm:px-6 py-6 max-w-7xl mx-auto gap-4 text-xs sm:text-body-sm text-on-surface-variant font-mono text-center sm:text-left"
       >
-        <!-- Copyright / PGP verification status -->
-        <div class="text-on-surface-variant">
-          © 2025 Aris Dwi M. // PGP: 4A7F 92B1 C08D E351 // All logs verified.
-        </div>
-
-        <!-- Navigation links -->
-        <div
-          class="flex flex-wrap items-center justify-center gap-4 sm:gap-6 text-on-surface-variant"
-        >
+        <div>© 2025 Aris Dwi M. Dibuat dengan cermat untuk berbagi pengetahuan.</div>
+        <div class="flex items-center gap-4 sm:gap-6">
           <a
-            class="hover:text-primary transition-colors duration-150"
+            class="hover:text-primary transition-colors"
             href="https://github.com"
-            target="_blank"
             rel="noreferrer"
+            target="_blank"
             >GitHub</a
           >
           <a
-            class="hover:text-primary transition-colors duration-150"
-            href="https://tryhackme.com"
-            target="_blank"
+            class="hover:text-primary transition-colors"
+            href="https://linkedin.com"
             rel="noreferrer"
-            >TryHackMe</a
-          >
-          <a
-            class="hover:text-primary transition-colors duration-150"
-            href="https://hackthebox.com"
             target="_blank"
-            rel="noreferrer"
-            >HackTheBox</a
+            >LinkedIn</a
           >
-          <a
-            class="hover:text-primary transition-colors duration-150"
-            href="../#feed"
-            >PGP Key</a
+          <a class="hover:text-primary transition-colors" href="#contact"
+            >Kontak</a
           >
         </div>
       </div>

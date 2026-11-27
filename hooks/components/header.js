@@ -12,9 +12,6 @@ function header() {
           class="font-medium text-on-surface hover:text-primary transition-colors text-sm sm:text-base tracking-tight flex items-center gap-2 font-mono shrink-0"
           href="/"
         >
-          <span
-            class="inline-block w-2 h-2 rounded-full bg-primary animate-pulse"
-          ></span>
           Aris Dwi M.
         </a>
 

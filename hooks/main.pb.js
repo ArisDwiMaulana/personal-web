@@ -1,8 +1,5 @@
 /// <reference path="../data/types.d.ts" />
 
-/* HTML COMPONENTS */
-
-/* DINAMIC ROUTING */
 routerAdd("GET", "/articles/{slug}/", (e) => {
   const slug = e.request.pathValue("slug");
   const header = require(`${__hooks}/components/header.js`);
